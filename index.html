@@ -1025,26 +1025,54 @@ function openAddModal() {
       </div>
     </div>
 
-    <!-- BLOCO 3: Range e Capital — SEMPRE visível -->
+    <!-- BLOCO 3: Range, Price e Capital — SEMPRE visível, mesma nomenclatura dos protocolos -->
     <div style="margin-top:.75rem;padding:.85rem;background:var(--bg);border:1px solid var(--border);border-radius:6px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem">
-        <span style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">Range & Capital</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+        <span style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">Posição</span>
         <span id="fm-price-label" style="font-size:.62rem;color:var(--cyan);font-family:'JetBrains Mono',monospace"></span>
       </div>
+
+      <!-- Min / Max — igual ao protocolo -->
       <div class="form-row">
         <div class="form-group">
-          <label>Range Mínimo</label>
-          <input id="fm-low" type="number" step="any" placeholder="ex: 0.0040" oninput="updateRangePreview()">
+          <label style="display:flex;align-items:center;gap:.35rem">
+            Min
+            <span style="font-size:.6rem;color:var(--muted);font-weight:400">limite inferior do range</span>
+          </label>
+          <input id="fm-low" type="number" step="any" placeholder="ex: 0.000046881" oninput="updateRangePreview()"
+            style="font-family:'JetBrains Mono',monospace">
         </div>
         <div class="form-group">
-          <label>Range Máximo</label>
-          <input id="fm-high" type="number" step="any" placeholder="ex: 0.0120" oninput="updateRangePreview()">
+          <label style="display:flex;align-items:center;gap:.35rem">
+            Max
+            <span style="font-size:.6rem;color:var(--muted);font-weight:400">limite superior do range</span>
+          </label>
+          <input id="fm-high" type="number" step="any" placeholder="ex: 0.000059596" oninput="updateRangePreview()"
+            style="font-family:'JetBrains Mono',monospace">
         </div>
       </div>
+
+      <!-- Price — preço atual, igual ao que o protocolo mostra -->
       <div class="form-group" style="margin-top:.5rem">
-        <label>Capital na Pool (USD)</label>
-        <input id="fm-capital" type="number" step="any" placeholder="ex: 200">
+        <label style="display:flex;align-items:center;gap:.35rem">
+          Price
+          <span style="font-size:.6rem;color:var(--muted);font-weight:400">preço atual do par no protocolo</span>
+        </label>
+        <input id="fm-current-price" type="number" step="any" placeholder="ex: 0.000029531"
+          style="font-family:'JetBrains Mono',monospace"
+          oninput="updateRangePreview()">
+        <div id="fm-price-hint" style="font-size:.6rem;color:var(--muted);margin-top:.2rem"></div>
       </div>
+
+      <!-- Capital -->
+      <div class="form-group" style="margin-top:.5rem">
+        <label style="display:flex;align-items:center;gap:.35rem">
+          Valor da Posição (USD)
+          <span style="font-size:.6rem;color:var(--muted);font-weight:400">total em $ da sua posição</span>
+        </label>
+        <input id="fm-capital" type="number" step="any" placeholder="ex: 113.85">
+      </div>
+
       <div id="fm-range-preview" style="margin-top:.6rem"></div>
     </div>
 
@@ -1142,6 +1170,8 @@ function updatePairPreview() { onPairChange(); }
 function updateRangePreview() {
   const lo = parseFloat(document.getElementById('fm-low').value);
   const hi = parseFloat(document.getElementById('fm-high').value);
+  const priceEl = document.getElementById('fm-current-price');
+  const price = priceEl ? parseFloat(priceEl.value) : NaN;
   const preview = document.getElementById('fm-range-preview');
   if (!preview) return;
   if (isNaN(lo) || isNaN(hi) || lo <= 0 || hi <= 0 || hi <= lo) { preview.innerHTML = ''; return; }
@@ -1149,10 +1179,21 @@ function updateRangePreview() {
   const width = ((hi - lo) / mid * 100).toFixed(0);
   const ilMax = calcILMax(lo, hi);
   const ilColor = ilMax < 2 ? 'var(--green)' : ilMax < 5 ? 'var(--orange)' : 'var(--red)';
+
+  let priceStatus = '';
+  if (!isNaN(price) && price > 0) {
+    const pct = ((price - lo) / (hi - lo) * 100).toFixed(0);
+    const inRange = price >= lo && price <= hi;
+    const statusColor = inRange ? 'var(--green)' : 'var(--red)';
+    const statusLabel = inRange ? `✓ dentro do range (${pct}%)` : (price < lo ? '⚠ abaixo do range' : '⚠ acima do range');
+    priceStatus = `<span>Price: <strong style="color:${statusColor}">${statusLabel}</strong></span>`;
+  }
+
   preview.innerHTML = `<div style="display:flex;gap:1.25rem;font-size:.65rem;color:var(--muted);flex-wrap:wrap;padding-top:.25rem;border-top:1px solid var(--border)">
     <span>Largura: <strong style="color:var(--text)">${width}%</strong></span>
     <span>Ponto médio: <strong style="color:var(--cyan);font-family:'JetBrains Mono',monospace">${mid.toPrecision(5)}</strong></span>
     <span>IL máx: <strong style="color:${ilColor}">${ilMax.toFixed(1)}%</strong></span>
+    ${priceStatus}
   </div>`;
 }
 
@@ -1171,6 +1212,7 @@ function saveNewPool() {
   const rangeHigh = parseFloat(document.getElementById('fm-high').value);
   const positionValue = parseFloat(document.getElementById('fm-capital').value);
   const objective = document.getElementById('fm-obj').value;
+  const priceInput = parseFloat(document.getElementById('fm-current-price').value);
 
   if (!tokenA || !tokenB) { alert('Preencha os dois tokens do par.'); return; }
   if (isNaN(rangeLow) || isNaN(rangeHigh) || rangeHigh <= rangeLow) {
@@ -1178,25 +1220,41 @@ function saveNewPool() {
   }
 
   const symbol = tokenA + '-' + tokenB;
+  const tokenPair = isTokenPairPool(symbol);
 
-  // Preço de entrada: usa TECH se disponível, senão ponto médio do range
+  // Preço de entrada: prioridade = campo Price (copiado do protocolo)
+  // Depois: TECH (preço live) → ponto médio do range
   let entryPrice = null;
-  if (!isTokenPairPool(symbol)) {
+  let currentRatio = null;
+
+  if (!isNaN(priceInput) && priceInput > 0) {
+    // Usuário colou o Price direto do protocolo
+    if (tokenPair) {
+      currentRatio = priceInput; // ex: 0.000029531 HYPE per UPUMP
+    } else {
+      entryPrice = priceInput;   // ex: 2128.94 USD
+    }
+  }
+
+  if (!tokenPair && !entryPrice) {
     const asset = getAssetKey(symbol);
     const tech = asset ? TECH[asset] : null;
     if (tech) entryPrice = tech.price;
   }
   if (!entryPrice) entryPrice = (rangeLow + rangeHigh) / 2;
 
-  const pools = getMyPools();
-  pools.push({
+  const poolObj = {
     symbol, protocol, chain, rangeLow, rangeHigh,
     entryPrice,
     positionValue: isNaN(positionValue) ? 0 : positionValue,
     feesCollected: 0,
     objective,
     addedAt: new Date().toISOString()
-  });
+  };
+  if (currentRatio !== null) poolObj.currentRatio = currentRatio;
+
+  const pools = getMyPools();
+  pools.push(poolObj);
   saveMyPools(pools);
   closeModal();
   renderMyPools();
@@ -1726,7 +1784,7 @@ function renderDashboard() {
       const h = rangeHealth(price, p.rangeLow, p.rangeHigh);
       if (h.status === 'OUT') outRange++; else inRange++;
     }
-    const aKey = asset || 'Outro';
+    const aKey = getAssetKey(p.symbol) || p.chain || 'Outro';
     byAsset[aKey] = (byAsset[aKey] || 0) + 1;
     byChain[p.chain] = (byChain[p.chain] || 0) + 1;
   });
