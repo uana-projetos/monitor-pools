@@ -967,6 +967,34 @@ function openAddModal() {
   modal.innerHTML = `<div class="modal">
     <h3>Adicionar Minha Pool</h3>
 
+    <!-- Analisar Print da Pool por IA -->
+    <div style="background:rgba(59,158,255,.05);border:1px dashed rgba(59,158,255,.3);border-radius:6px;padding:.75rem;margin-bottom:.85rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+        <span style="font-size:.65rem;color:var(--cyan);text-transform:uppercase;letter-spacing:.5px">🖼 Analisar Print da Pool (IA)</span>
+        <button type="button" onclick="toggleApiKeyPanel()" style="font-size:.6rem;color:var(--muted);background:none;border:none;cursor:pointer;padding:0;font-family:'Inter',sans-serif">⚙ API Key</button>
+      </div>
+      <div id="fm-api-key-panel" style="display:none;margin-bottom:.5rem">
+        <input id="fm-api-key" type="password" placeholder="sk-ant-... (Claude API Key)"
+          style="width:100%;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.7rem;box-sizing:border-box"
+          oninput="saveApiKey()">
+        <div style="font-size:.55rem;color:var(--muted);margin-top:.2rem">Chave salva localmente no browser. Não é enviada a nenhum servidor externo além da Anthropic.</div>
+      </div>
+      <div id="fm-image-dropzone"
+        style="border:1px dashed var(--border);border-radius:4px;padding:.75rem;text-align:center;cursor:pointer;font-size:.65rem;color:var(--muted)"
+        onclick="document.getElementById('fm-image-input').click()"
+        ondragover="event.preventDefault();this.style.borderColor='var(--cyan)'"
+        ondragleave="this.style.borderColor='var(--border)'"
+        ondrop="handleImageDrop(event)">
+        <input type="file" id="fm-image-input" accept="image/*" style="display:none" onchange="handleImageFile(event)">
+        📷 Cole um print (Ctrl+V) ou clique para selecionar
+      </div>
+      <div id="fm-image-preview" style="margin-top:.4rem;display:none">
+        <img id="fm-image-thumb" style="max-width:100%;max-height:110px;border-radius:4px;border:1px solid var(--border);display:block">
+        <button type="button" onclick="analyzePoolImage()" style="width:100%;margin-top:.4rem;padding:7px;background:var(--cyan);border:none;border-radius:4px;color:#000;font-weight:700;font-size:.72rem;cursor:pointer;font-family:'Inter',sans-serif">🔍 Analisar com IA — Preencher Formulário</button>
+      </div>
+      <div id="fm-image-result" style="margin-top:.4rem;font-size:.65rem;color:var(--muted);min-height:.8rem"></div>
+    </div>
+
     <!-- Quick-fill helper: selecionar preenche os campos abaixo -->
     <div class="form-group" style="margin-bottom:1rem">
       <label style="font-size:.65rem;color:var(--cyan);text-transform:uppercase;letter-spacing:.5px">⚡ Atalho — preencher pelo monitor</label>
@@ -1062,6 +1090,17 @@ function openAddModal() {
           style="font-family:'JetBrains Mono',monospace"
           oninput="updateRangePreview()">
         <div id="fm-price-hint" style="font-size:.6rem;color:var(--muted);margin-top:.2rem"></div>
+      </div>
+
+      <!-- Sugestão de Range por Perfil de Risco -->
+      <div style="margin-top:.65rem">
+        <label style="font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">Sugerir Range por Perfil</label>
+        <div style="display:flex;gap:.4rem;margin-top:.35rem">
+          <button type="button" onclick="suggestRange('conservador')" style="flex:1;padding:7px 4px;background:rgba(52,211,153,.08);border:1px solid var(--green);border-radius:5px;color:var(--green);font-size:.65rem;cursor:pointer;font-family:'Inter',sans-serif">🛡 Conservador<br><span style="font-size:.55rem;color:var(--muted)">±8–12%</span></button>
+          <button type="button" onclick="suggestRange('moderado')" style="flex:1;padding:7px 4px;background:rgba(245,158,11,.08);border:1px solid var(--orange);border-radius:5px;color:var(--orange);font-size:.65rem;cursor:pointer;font-family:'Inter',sans-serif">⚖ Moderado<br><span style="font-size:.55rem;color:var(--muted)">±20–30%</span></button>
+          <button type="button" onclick="suggestRange('agressivo')" style="flex:1;padding:7px 4px;background:rgba(239,68,68,.08);border:1px solid var(--red);border-radius:5px;color:var(--red);font-size:.65rem;cursor:pointer;font-family:'Inter',sans-serif">🔥 Agressivo<br><span style="font-size:.55rem;color:var(--muted)">±45–60%</span></button>
+        </div>
+        <div id="fm-suggest-hint" style="font-size:.6rem;color:var(--muted);margin-top:.3rem;min-height:.9rem"></div>
       </div>
 
       <!-- Capital -->
@@ -1166,6 +1205,203 @@ function flipTokenPair() {
 function flipPair() { flipTokenPair(); }
 function flipSelectedPair() { flipTokenPair(); }
 function updatePairPreview() { onPairChange(); }
+
+// ── Perfil de Risco: sugerir range automaticamente ────────────────
+function suggestRange(perfil) {
+  const priceVal = parseFloat(document.getElementById('fm-current-price').value);
+  const tA = (document.getElementById('fm-tokenA').value || '').trim().toUpperCase();
+  const tB = (document.getElementById('fm-tokenB').value || '').trim().toUpperCase();
+  const sym = tA + '-' + tB;
+  const tokenPair = isTokenPairPool(sym);
+  const hint = document.getElementById('fm-suggest-hint');
+
+  if (isNaN(priceVal) || priceVal <= 0) {
+    if (hint) hint.innerHTML = '<span style="color:var(--orange)">⚠ Preencha o campo Price primeiro.</span>';
+    return;
+  }
+
+  // Percentuais por perfil e tipo de par
+  const pcts = {
+    conservador: { stable: 0.08, token: 0.12 },
+    moderado:    { stable: 0.20, token: 0.30 },
+    agressivo:   { stable: 0.45, token: 0.60 }
+  };
+  const pct = pcts[perfil][tokenPair ? 'token' : 'stable'];
+  const low  = priceVal * (1 - pct);
+  const high = priceVal * (1 + pct);
+
+  // Decimais inteligentes conforme magnitude do preço
+  const dec = priceVal < 0.0001 ? 9 : priceVal < 0.01 ? 7 : priceVal < 1 ? 6 : priceVal < 100 ? 4 : 2;
+  document.getElementById('fm-low').value  = low.toFixed(dec);
+  document.getElementById('fm-high').value = high.toFixed(dec);
+
+  const labels = { conservador: '🛡 Conservador', moderado: '⚖ Moderado', agressivo: '🔥 Agressivo' };
+  const colors = { conservador: 'var(--green)', moderado: 'var(--orange)', agressivo: 'var(--red)' };
+  if (hint) hint.innerHTML = `<span style="color:${colors[perfil]}">✓ ${labels[perfil]} aplicado — range de ±${(pct*100).toFixed(0)}% em torno de ${priceVal}</span>`;
+
+  updateRangePreview();
+}
+
+// ── Análise de Print por IA ────────────────────────────────────────
+let _poolImageB64 = null;
+let _poolImageMime = 'image/png';
+
+function toggleApiKeyPanel() {
+  const panel = document.getElementById('fm-api-key-panel');
+  if (!panel) return;
+  const open = panel.style.display !== 'none';
+  panel.style.display = open ? 'none' : 'block';
+  if (!open) {
+    const saved = localStorage.getItem('claude_api_key') || '';
+    const inp = document.getElementById('fm-api-key');
+    if (inp) inp.value = saved;
+  }
+}
+
+function saveApiKey() {
+  const key = (document.getElementById('fm-api-key') || {}).value || '';
+  if (key) localStorage.setItem('claude_api_key', key);
+}
+
+function handleImageFile(evt) {
+  const file = evt.target.files[0];
+  if (file) loadPoolImageFile(file);
+}
+
+function handleImageDrop(evt) {
+  evt.preventDefault();
+  document.getElementById('fm-image-dropzone').style.borderColor = 'var(--border)';
+  const file = evt.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) loadPoolImageFile(file);
+}
+
+function loadPoolImageFile(file) {
+  _poolImageMime = file.type || 'image/png';
+  const reader = new FileReader();
+  reader.onload = e => {
+    _poolImageB64 = e.target.result.split(',')[1];
+    const thumb = document.getElementById('fm-image-thumb');
+    const preview = document.getElementById('fm-image-preview');
+    const dz = document.getElementById('fm-image-dropzone');
+    if (thumb) thumb.src = e.target.result;
+    if (preview) preview.style.display = 'block';
+    if (dz) dz.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+// Paste global — só ativa quando o modal está aberto
+document.addEventListener('paste', function(e) {
+  if (!document.getElementById('addModal')) return;
+  const items = e.clipboardData && e.clipboardData.items;
+  if (!items) return;
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].type.startsWith('image/')) {
+      loadPoolImageFile(items[i].getAsFile());
+      break;
+    }
+  }
+});
+
+async function analyzePoolImage() {
+  const apiKey = localStorage.getItem('claude_api_key') || '';
+  const resultEl = document.getElementById('fm-image-result');
+  const btn = document.querySelector('#fm-image-preview button');
+
+  if (!apiKey) {
+    if (resultEl) resultEl.innerHTML = '<span style="color:var(--orange)">⚠ Configure sua Claude API Key (clique em ⚙ API Key acima).</span>';
+    toggleApiKeyPanel();
+    return;
+  }
+  if (!_poolImageB64) {
+    if (resultEl) resultEl.innerHTML = '<span style="color:var(--orange)">⚠ Nenhuma imagem carregada.</span>';
+    return;
+  }
+
+  if (resultEl) resultEl.innerHTML = '<span style="color:var(--cyan)">⏳ Analisando imagem com IA...</span>';
+  if (btn) btn.disabled = true;
+
+  const prompt = `Você é especialista em DeFi. Analise este screenshot de uma pool de liquidez concentrada (Uniswap V3, ProjectX, Ambient, etc.) e extraia os dados visíveis.
+
+Retorne SOMENTE um JSON válido, sem markdown, sem explicação:
+{"tokenA":"SÍMBOLO","tokenB":"SÍMBOLO","protocol":null,"chain":null,"price":null,"minRange":null,"maxRange":null,"positionValue":null}
+
+Regras:
+- tokenA e tokenB: símbolos dos tokens em maiúsculo
+- price: preço atual do par (número)
+- minRange: limite inferior do range (número)
+- maxRange: limite superior do range (número)
+- positionValue: valor em USD da posição (número)
+- Use null para campos não visíveis. Números sem aspas.`;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 256,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: _poolImageMime, data: _poolImageB64 } },
+            { type: 'text', text: prompt }
+          ]
+        }]
+      })
+    });
+
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error?.message || `HTTP ${resp.status}`);
+
+    let text = data.content[0].text.trim();
+    // Remove markdown code fences se houver
+    text = text.replace(/^```[a-z]*\n?/,'').replace(/\n?```$/,'').trim();
+    const json = JSON.parse(text);
+
+    const filled = [];
+    const setField = (id, val) => {
+      if (val !== null && val !== undefined) {
+        const el = document.getElementById(id);
+        if (el) { el.value = val; filled.push(el.labels?.[0]?.textContent?.trim() || id); }
+      }
+    };
+
+    if (json.tokenA) { document.getElementById('fm-tokenA').value = json.tokenA; filled.push('Token A'); }
+    if (json.tokenB) { document.getElementById('fm-tokenB').value = json.tokenB; filled.push('Token B'); }
+    if (json.minRange != null)     { document.getElementById('fm-low').value = json.minRange; filled.push('Min'); }
+    if (json.maxRange != null)     { document.getElementById('fm-high').value = json.maxRange; filled.push('Max'); }
+    if (json.price != null)        { document.getElementById('fm-current-price').value = json.price; filled.push('Price'); }
+    if (json.positionValue != null){ document.getElementById('fm-capital').value = json.positionValue; filled.push('Valor'); }
+
+    if (json.protocol) {
+      const proto = document.getElementById('fm-protocol');
+      const opts = Array.from(proto.options);
+      const m = opts.find(o =>
+        o.value.toLowerCase().includes(json.protocol.toLowerCase()) ||
+        json.protocol.toLowerCase().includes(o.text.toLowerCase().split(' ')[0])
+      );
+      if (m) proto.value = m.value;
+    }
+
+    onPairChange();
+    updateRangePreview();
+
+    if (resultEl) resultEl.innerHTML = filled.length
+      ? `<span style="color:var(--green)">✓ Preenchido automaticamente: ${filled.join(', ')}</span>`
+      : `<span style="color:var(--orange)">⚠ Não consegui extrair dados desta imagem. Tente um print mais claro.</span>`;
+
+  } catch (err) {
+    if (resultEl) resultEl.innerHTML = `<span style="color:var(--red)">❌ Erro: ${err.message}</span>`;
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
 
 function updateRangePreview() {
   const lo = parseFloat(document.getElementById('fm-low').value);
