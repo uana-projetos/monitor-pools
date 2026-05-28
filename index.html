@@ -117,7 +117,7 @@ footer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);font-
 .notif-count{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:.55rem;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
 @keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 /* Modal */
-.modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:center;justify-content:center}
+.modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:800;display:flex;align-items:center;justify-content:center}
 .modal{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;width:400px;max-width:92vw;max-height:85vh;overflow-y:auto}
 .modal h3{font-size:1rem;margin-bottom:1rem}
 .form-group{margin-bottom:.85rem}
@@ -249,7 +249,7 @@ footer .version-tag{font-size:.65rem;color:var(--cyan);opacity:.6;margin-left:.5
 <div id="panelContent"></div>
 </div>
 <footer>
-Dados: DefiLlama Yields API + CoinGecko via análise técnica | Protocolos: Uniswap v3/v4, Orca, Raydium, ProjectX (Hyperliquid), Camelot<span class="version-tag">v1.3.0</span><br>
+Dados: DefiLlama Yields API + CoinGecko via análise técnica | Protocolos: Uniswap v3/v4, Orca, Raydium, ProjectX (Hyperliquid), Camelot<span class="version-tag">v1.3.1</span><br>
 Este painel é informativo. Não constitui recomendação financeira. Verifique os riscos de impermanent loss antes de fornecer liquidez.
 </footer>
 </div>
@@ -3272,7 +3272,7 @@ if ('serviceWorker' in navigator) {
 </script>
 
 <button id="donate-btn" onclick="openDonateModal()" title="Apoiar Uaná Lee"
-  style="position:fixed;bottom:1.2rem;right:1.2rem;z-index:200;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;cursor:pointer;font-size:1.15rem;box-shadow:0 4px 18px rgba(59,158,255,.35);transition:transform .18s;display:flex;align-items:center;justify-content:center"
+  style="position:fixed;bottom:1.2rem;right:1.2rem;z-index:9999;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;cursor:pointer;font-size:1.15rem;box-shadow:0 4px 18px rgba(59,158,255,.35);transition:transform .18s;display:flex;align-items:center;justify-content:center"
   onmouseover="this.style.transform='scale(1.12)'" onmouseout="this.style.transform='scale(1)'">☕</button>
 </body>
 </html>
