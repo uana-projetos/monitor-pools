@@ -246,7 +246,7 @@ footer .version-tag{font-size:.65rem;color:var(--cyan);opacity:.6;margin-left:.5
 <div id="panelContent"></div>
 </div>
 <footer>
-Dados: DefiLlama Yields API + CoinGecko via análise técnica | Protocolos: Uniswap v3/v4, Orca, Raydium, ProjectX (Hyperliquid), Camelot<span class="version-tag">v1.1.0</span><br>
+Dados: DefiLlama Yields API + CoinGecko via análise técnica | Protocolos: Uniswap v3/v4, Orca, Raydium, ProjectX (Hyperliquid), Camelot<span class="version-tag">v1.2.0</span><br>
 Este painel é informativo. Não constitui recomendação financeira. Verifique os riscos de impermanent loss antes de fornecer liquidez.
 </footer>
 </div>
@@ -2933,6 +2933,10 @@ const LOAN_PROTOCOLS = [
   {name:'Compound v3',icon:'🏗', chains:['Ethereum','Base','Arbitrum'], defaultLT:83},
   {name:'Spark',     icon:'✨', chains:['Ethereum'], defaultLT:77},
 ];
+
+
+function openModal(c){closeModal();var m=document.createElement('div');m.className='modal-bg';m.id='addModal';m.innerHTML=c;document.body.appendChild(m);}
+function fmtNum(n){if(!n||isNaN(n))return'0';return n>=1e6?(n/1e6).toFixed(2)+'M':n>=1000?n.toLocaleString('en',{maximumFractionDigits:0}):n.toFixed(2);}
 
 function getLoans() { try { return JSON.parse(localStorage.getItem('defiLoans')||'[]'); } catch { return []; } }
 function saveLoans(l) { localStorage.setItem('defiLoans', JSON.stringify(l)); }
