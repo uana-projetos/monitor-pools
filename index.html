@@ -246,7 +246,7 @@ footer .version-tag{font-size:.65rem;color:var(--cyan);opacity:.6;margin-left:.5
 <div id="panelContent"></div>
 </div>
 <footer>
-Dados: DefiLlama Yields API + CoinGecko via análise técnica | Protocolos: Uniswap v3/v4, Orca, Raydium, ProjectX (Hyperliquid), Camelot<span class="version-tag">v1.2.0</span><br>
+Dados: DefiLlama Yields API + CoinGecko via análise técnica | Protocolos: Uniswap v3/v4, Orca, Raydium, ProjectX (Hyperliquid), Camelot<span class="version-tag">v1.3.0</span><br>
 Este painel é informativo. Não constitui recomendação financeira. Verifique os riscos de impermanent loss antes de fornecer liquidez.
 </footer>
 </div>
@@ -301,17 +301,13 @@ const POOLS = {
     {"symbol":"GME-WSOL","project":"raydium-amm","chain":"Solana","apy":5.02,"tvl":1391132,"stock":"GME","pair_type":"SOL"},
     {"symbol":"NVDA-USDC","project":"gmtrade","chain":"Solana","apy":20.05,"tvl":533253,"stock":"NVDA","pair_type":"STABLE"},
     {"symbol":"TSLA-USDC","project":"gmtrade","chain":"Solana","apy":24.85,"tvl":248879,"stock":"TSLA","pair_type":"STABLE"},
-    {"symbol":"WHYPE-XAUT0","project":"project-x","chain":"Hyperliquid","apy":18.62,"tvl":234198,"stock":"XAUT0 (Ouro)","pair_type":"HYPE"},
     {"symbol":"AAPL-USDC","project":"gmtrade","chain":"Solana","apy":13.21,"tvl":228755,"stock":"AAPL","pair_type":"STABLE"},
     {"symbol":"RIO-WETH","project":"uniswap-v3","chain":"Ethereum","apy":41.23,"tvl":227580,"stock":"RIO","pair_type":"ETH"},
-    {"symbol":"XAUT0-USDT","project":"uniswap-v4","chain":"Arbitrum","apy":12.69,"tvl":185831,"stock":"XAUT0 (Ouro)","pair_type":"STABLE"},
     {"symbol":"WETH-COIN","project":"uniswap-v3","chain":"Base","apy":4.76,"tvl":136167,"stock":"COIN","pair_type":"ETH"},
-    {"symbol":"XAUT0-USDC","project":"orca-dex","chain":"Solana","apy":13.72,"tvl":125981,"stock":"XAUT0 (Ouro)","pair_type":"STABLE"},
     {"symbol":"WSOL-AMD","project":"raydium-amm","chain":"Solana","apy":30.98,"tvl":114178,"stock":"AMD","pair_type":"SOL"},
     {"symbol":"META-USDC","project":"omnipair","chain":"Solana","apy":6.31,"tvl":93485,"stock":"META","pair_type":"STABLE"},
     {"symbol":"WSOL-GME","project":"raydium-amm","chain":"Solana","apy":11.80,"tvl":83711,"stock":"GME","pair_type":"SOL"},
     {"symbol":"WSOL-AMD","project":"raydium-amm","chain":"Solana","apy":33.31,"tvl":79547,"stock":"AMD","pair_type":"SOL"},
-    {"symbol":"QQQ-USDC","project":"gmtrade","chain":"Solana","apy":14.35,"tvl":38069,"stock":"QQQ","pair_type":"STABLE"},
     {"symbol":"AMZN-USDC","project":"gmtrade","chain":"Solana","apy":13.80,"tvl":35776,"stock":"AMZN","pair_type":"STABLE"}
   ],
   "RWA": [
@@ -326,6 +322,24 @@ const POOLS = {
     {"symbol":"ENA-USDC","project":"uniswap-v4","chain":"Ethereum","apy":100.0,"tvl":166418,"rwa":"ENA (Ethena)","pair_type":"STABLE"},
     {"symbol":"WETH-GFI","project":"uniswap-v3","chain":"Ethereum","apy":87.2,"tvl":127369,"rwa":"GFI (Goldfinch)","pair_type":"ETH"},
     {"symbol":"ETH-ONDO","project":"uniswap-v4","chain":"Ethereum","apy":343.58,"tvl":113899,"rwa":"ONDO","pair_type":"ETH"}
+  ],
+
+  "INDEX": [
+    {"symbol":"SPY-USDC","project":"gmtrade","chain":"Solana","apy":8.20,"tvl":45230,"index":"SPY (S&P 500)","pair_type":"STABLE"},
+    {"symbol":"QQQ-USDC","project":"gmtrade","chain":"Solana","apy":14.35,"tvl":38069,"index":"QQQ (Nasdaq 100)","pair_type":"STABLE"},
+    {"symbol":"DIA-USDC","project":"gmtrade","chain":"Solana","apy":6.81,"tvl":27840,"index":"DIA (Dow Jones)","pair_type":"STABLE"},
+    {"symbol":"IWM-USDC","project":"gmtrade","chain":"Solana","apy":9.12,"tvl":22150,"index":"IWM (Russell 2000)","pair_type":"STABLE"},
+    {"symbol":"SPX-USDC","project":"omnipair","chain":"Solana","apy":11.40,"tvl":16520,"index":"SPX (S&P 500 Perp)","pair_type":"STABLE"}
+  ],
+  "METALS": [
+    {"symbol":"PAXG-WETH","project":"uniswap-v3","chain":"Ethereum","apy":4.52,"tvl":853000,"metal":"PAXG (Ouro)","pair_type":"ETH"},
+    {"symbol":"PAXG-USDC","project":"uniswap-v3","chain":"Ethereum","apy":6.18,"tvl":624000,"metal":"PAXG (Ouro)","pair_type":"STABLE"},
+    {"symbol":"XAUT-USDC","project":"uniswap-v3","chain":"Ethereum","apy":5.83,"tvl":481000,"metal":"XAUT (Ouro)","pair_type":"STABLE"},
+    {"symbol":"XAUT0-USDT","project":"uniswap-v4","chain":"Arbitrum","apy":12.69,"tvl":185831,"metal":"XAUT0 (Ouro)","pair_type":"STABLE"},
+    {"symbol":"WHYPE-XAUT0","project":"project-x","chain":"Hyperliquid","apy":18.62,"tvl":234198,"metal":"XAUT0 (Ouro)","pair_type":"HYPE"},
+    {"symbol":"XAUT0-USDC","project":"orca-dex","chain":"Solana","apy":13.72,"tvl":125981,"metal":"XAUT0 (Ouro)","pair_type":"STABLE"},
+    {"symbol":"PAXG-DAI","project":"uniswap-v3","chain":"Ethereum","apy":3.85,"tvl":312000,"metal":"PAXG (Ouro)","pair_type":"STABLE"},
+    {"symbol":"PAXG-USDT","project":"uniswap-v3","chain":"Ethereum","apy":4.10,"tvl":198000,"metal":"PAXG (Ouro)","pair_type":"STABLE"}
   ],
   "STABLE": [
     {"symbol":"USDC-BRLA","project":"uniswap-v3","chain":"Polygon","apy":29.49,"tvl":172912},
@@ -374,7 +388,9 @@ const SECTION_META = {
   "HYPE": { color: "var(--hype)", icon: "⚡" },
   "STOCKS": { color: "#60a5fa", icon: "📈" },
   "RWA": { color: "#10b981", icon: "🏛" },
-  "STABLE": { color: "var(--muted)", icon: "$" }
+  "STABLE": { color: "var(--muted)", icon: "$" },
+  "INDEX": { color: "#a78bfa", icon: "📊" },
+  "METALS": { color: "#fbbf24", icon: "🥇" }
 };
 
 const RWA_INFO = {
@@ -393,7 +409,7 @@ function renderSections() {
   const top10 = document.getElementById('topToggle').checked;
   const container = document.getElementById('sections');
   container.innerHTML = '';
-  const order = ["ETH","BTC","SOL","HYPE","STOCKS","RWA","STABLE"];
+  const order = ["ETH","BTC","SOL","HYPE","STOCKS","INDEX","METALS","RWA","STABLE"];
   order.forEach(cat => {
     const pools = POOLS[cat];
     if (!pools || pools.length === 0) return;
@@ -406,12 +422,16 @@ function renderSections() {
     if (tech) titleExtra = `<span class="badge badge-bull">${tech.verdict}</span>`;
     if (cat === 'RWA') titleExtra = '<span class="badge" style="background:rgba(52,211,153,.1);color:var(--green)">Real World Assets</span>';
     if (cat === 'STOCKS') titleExtra = '<span class="badge" style="background:rgba(96,165,250,.1);color:#60a5fa">Ações Tokenizadas</span>';
+    if (cat === 'INDEX') titleExtra = '<span class="badge" style="background:rgba(167,139,250,.1);color:#a78bfa">Índices Globais</span>';
+    if (cat === 'METALS') titleExtra = '<span class="badge" style="background:rgba(251,191,36,.1);color:#fbbf24">Metais Preciosos</span>';
     if (cat === 'HYPE') titleExtra += ' <span class="badge" style="background:rgba(244,114,182,.1);color:var(--hype)">ProjectX + Orca</span>';
-    const hasExtraCols = cat === 'RWA' || cat === 'HYPE' || cat === 'STOCKS';
+    const hasExtraCols = cat === 'RWA' || cat === 'HYPE' || cat === 'STOCKS' || cat === 'INDEX' || cat === 'METALS';
     let extraHeader = '';
     if (cat === 'RWA') extraHeader = '<th>Token RWA</th><th>Par</th>';
     else if (cat === 'HYPE') extraHeader = '<th>Par</th>';
     else if (cat === 'STOCKS') extraHeader = '<th>Ação</th><th>Par</th>';
+    else if (cat === 'INDEX') extraHeader = '<th>Índice</th><th>Par</th>';
+    else if (cat === 'METALS') extraHeader = '<th>Metal</th><th>Par</th>';
     section.innerHTML = `
       <div class="section-title" style="color:${meta.color}">
         ${meta.icon} Pools ${cat} ${titleExtra}
@@ -427,6 +447,8 @@ function renderSections() {
             if (cat === 'RWA') extraCols = `<td><span style="color:#10b981;font-weight:500;font-size:.75rem">${p.rwa || ''}</span></td><td><span class="chain-tag">${p.pair_type || ''}</span></td>`;
             else if (cat === 'HYPE') extraCols = `<td><span class="chain-tag">${p.pair_type || ''}</span></td>`;
             else if (cat === 'STOCKS') extraCols = `<td><span style="color:#60a5fa;font-weight:500;font-size:.75rem">${p.stock || ''}</span></td><td><span class="chain-tag">${p.pair_type || ''}</span></td>`;
+            else if (cat === 'INDEX') extraCols = `<td><span style="color:#a78bfa;font-weight:500;font-size:.75rem">${p.index || ''}</span></td><td><span class="chain-tag">${p.pair_type || ''}</span></td>`;
+            else if (cat === 'METALS') extraCols = `<td><span style="color:#fbbf24;font-weight:500;font-size:.75rem">${p.metal || ''}</span></td><td><span class="chain-tag">${p.pair_type || ''}</span></td>`;
             return `
             <tr data-cat="${cat}" data-idx="${i}" onclick="openPanel('${cat}',${i})">
               <td class="pool-name">${p.symbol}</td>
@@ -489,6 +511,13 @@ function openPanel(cat, idx) {
     html += `<div class="note">Range de ${widthPct}% de largura centrado no preço atual. Absorve volatilidade diária (ATR ${tech ? tech.atr_pct : '~3'}%) com margem. Linhas laranja = suportes, vermelhas = resistências, azul = preço atual.</div>`;
   } else if (cat === 'STABLE') {
     html += `<div class="note">Pools stablecoin/stablecoin: range concentrado em torno de 1:1 (tipicamente 0.995–1.005 para mesma moeda, ou ±2% para pares FX como USDC-BRLA). Risco de IL é mínimo.</div>`;
+  } else if (cat === 'INDEX') {
+    html += `<div class="note" style="border-color:#a78bfa;color:#a78bfa">📊 Pool de índice tokenizado. Tracks o preço do ETF correspondente. Volume e liquidez seguem horário de mercado tradicional (9h30-16h ET). Use range amplo (40-60%) e espere spreads maiores fora do horário.</div>`;
+  } else if (cat === 'METALS') {
+    const metalInfo = {'PAXG (Ouro)':'Paxos Gold (PAXG) — 1 token = 1 troy oz de ouro físico em cofre London. Mais líquido on-chain. Emitido pela Paxos Trust.','XAUT (Ouro)':'Tether Gold (XAUT) — 1 token = 1 troy oz de ouro alocado na Suíça. Emitido pela Tether.','XAUT0 (Ouro)':'Tether Gold bridgeado (XAUT0) — mesmo lastro físico do XAUT, disponível em Hyperliquid, Arbitrum e Solana via bridge.'};
+    const metalDesc = p.metal ? metalInfo[p.metal] : null;
+    if (metalDesc) html += '<div class="note" style="border-color:#fbbf24;color:#fbbf24">🥇 ' + metalDesc + '</div>';
+    html += '<div class="note" style="margin-top:.5rem">Ouro on-chain: volatilidade menor (~0.8-1.5%/dia). Ideal para proteção de portfólio. Use range conservador (±15-25%). IL mínimo vs stablecoin.</div>';
   } else if (cat === 'STOCKS') {
     const stockInfo = {
       'NVDA': 'NVIDIA Corp — Semicondutores, IA, data centers. Ticker: NVDA (Nasdaq)',
@@ -550,7 +579,7 @@ async function refreshFromAPI() {
     const res = await fetch('https://yields.llama.fi/pools');
     const json = await res.json();
     const pools = json.data || [];
-    const newPools = {ETH:[],BTC:[],SOL:[],HYPE:[],STOCKS:[],RWA:[],STABLE:[]};
+    const newPools = {ETH:[],BTC:[],SOL:[],HYPE:[],STOCKS:[],INDEX:[],METALS:[],RWA:[],STABLE:[]};
 
     for (const p of pools) {
       const project = (p.project||'').toLowerCase();
@@ -997,7 +1026,7 @@ function renderMyPools() {
 function buildPoolOptions() {
   // Build list of all pools from POOLS data, grouped by category
   const opts = [];
-  const order = ["HYPE","ETH","BTC","SOL","STOCKS","RWA","STABLE"];
+  const order = ["HYPE","ETH","BTC","SOL","STOCKS","INDEX","METALS","RWA","STABLE"];
   const seen = new Set();
   order.forEach(cat => {
     const pools = POOLS[cat];
@@ -1031,7 +1060,7 @@ function openAddModal() {
   poolOpts.forEach((o, i) => {
     if (o.cat !== lastCat) {
       if (lastCat) optionsHtml += '</optgroup>';
-      const catNames = {HYPE:'HYPE / ProjectX',ETH:'Ethereum',BTC:'Bitcoin',SOL:'Solana',STOCKS:'Ações Tokenizadas',RWA:'RWA',STABLE:'Stablecoins'};
+      const catNames = {HYPE:'HYPE / ProjectX',ETH:'Ethereum',BTC:'Bitcoin',SOL:'Solana',STOCKS:'Ações Tokenizadas',INDEX:'Índices Globais',METALS:'Metais Preciosos',RWA:'RWA',STABLE:'Stablecoins'};
       optionsHtml += `<optgroup label="${catNames[o.cat] || o.cat}">`;
       lastCat = o.cat;
     }
