@@ -209,6 +209,31 @@ footer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);font-
 #pwa-banner.show{display:flex}
 #pwa-banner .pwa-text{flex:1;font-size:.75rem;color:var(--text);line-height:1.4}
 #pwa-banner .pwa-text strong{color:var(--cyan)}
+/* SW update banner */
+#sw-update-bar{display:none;position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#1a2744,#0d1b2a);border-bottom:2px solid var(--cyan);padding:.55rem 1rem;z-index:9998;align-items:center;gap:.6rem;font-size:.78rem}
+#sw-update-bar.show{display:flex}
+#sw-update-bar .upd-txt{flex:1;color:var(--text)}
+#sw-update-bar .upd-txt strong{color:var(--cyan)}
+#sw-update-bar .upd-txt span{color:var(--muted);font-size:.7rem;margin-left:.4rem}
+#sw-update-bar button{font-size:.72rem;padding:.25rem .65rem;border-radius:6px;border:none;cursor:pointer}
+#sw-update-bar .btn-upd{background:var(--cyan);color:#000;font-weight:700}
+#sw-update-bar .btn-later{background:transparent;color:var(--muted);border:1px solid var(--border) !important}
+/* What's New modal */
+#whats-new-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.65);z-index:900;display:none;align-items:center;justify-content:center}
+#whats-new-bg.open{display:flex}
+#whats-new-modal{background:var(--card);border:1px solid var(--cyan);border-radius:12px;padding:1.4rem;width:420px;max-width:93vw;max-height:82vh;overflow-y:auto;position:relative}
+#whats-new-modal h3{font-size:1.05rem;color:var(--cyan);margin:0 0 .3rem;display:flex;align-items:center;gap:.5rem}
+#whats-new-modal .wn-version{font-size:.7rem;background:rgba(59,158,255,.15);color:var(--cyan);padding:2px 8px;border-radius:10px;font-weight:700}
+#whats-new-modal .wn-date{font-size:.68rem;color:var(--muted);margin-bottom:1rem}
+.wn-entry{margin-bottom:1.1rem}
+.wn-entry .wn-ver{font-size:.7rem;font-weight:700;color:var(--purple);background:rgba(168,85,247,.1);padding:2px 7px;border-radius:8px;display:inline-block;margin-bottom:.4rem}
+.wn-entry ul{margin:0;padding-left:1.2rem;list-style:none}
+.wn-entry ul li{font-size:.78rem;color:var(--text);padding:.2rem 0;display:flex;gap:.4rem;align-items:baseline}
+.wn-entry ul li::before{content:'•';color:var(--cyan);font-size:.9rem;line-height:1}
+.wn-entry ul li.tag-new::before{content:'🆕'}
+.wn-entry ul li.tag-fix::before{content:'🔧'}
+.wn-entry ul li.tag-improve::before{content:'⚡'}
+#whats-new-modal .wn-footer{display:flex;justify-content:flex-end;gap:.5rem;margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--border)}
 /* footer version */
 footer .version-tag{font-size:.65rem;color:var(--cyan);opacity:.6;margin-left:.5rem}
 
@@ -233,6 +258,76 @@ footer .version-tag{font-size:.65rem;color:var(--cyan);opacity:.6;margin-left:.5
 .tab-section{animation:fadeIn .18s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
+
+/* ── Search & Filter Bar ──────────────────────── */
+.search-bar{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;padding:.65rem 0 .5rem;border-bottom:1px solid var(--border);margin-bottom:.75rem}
+.search-input{flex:1;min-width:160px;background:var(--card);border:1px solid var(--border);border-radius:7px;padding:.45rem .75rem;color:var(--text);font-size:.8rem;outline:none;transition:border-color .18s}
+.search-input:focus{border-color:var(--cyan)}
+.search-select{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:.42rem .6rem;color:var(--text);font-size:.78rem;cursor:pointer;outline:none}
+.search-select:focus{border-color:var(--cyan)}
+.apy-input{width:80px;background:var(--card);border:1px solid var(--border);border-radius:7px;padding:.42rem .6rem;color:var(--text);font-size:.78rem;outline:none;text-align:center}
+.apy-input:focus{border-color:var(--cyan)}
+.btn-live{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(239,68,68,.05));border:1px solid rgba(239,68,68,.4);color:#ef4444;border-radius:7px;padding:.42rem .75rem;font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:.3rem;white-space:nowrap;transition:background .15s}
+.btn-live:hover{background:linear-gradient(135deg,rgba(239,68,68,.28),rgba(239,68,68,.1))}
+.btn-live.loading{opacity:.7;pointer-events:none}
+.live-badge{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.search-results-info{font-size:.72rem;color:var(--muted);padding:.2rem 0}
+/* Loan search */
+.loan-search-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.loan-live-result{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.65rem .85rem;margin:.3rem 0;display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.loan-live-result .lrate{color:var(--green);font-weight:700;font-family:monospace;font-size:.88rem}
+.loan-live-result .brate{color:var(--orange);font-weight:700;font-family:monospace;font-size:.88rem}
+
+
+/* ── Wallet Section ──────────────────────────── */
+.wallet-banner{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.wallet-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.wallet-addr{font-family:monospace;font-size:.78rem;color:var(--cyan);word-break:break-all}
+.wallet-chain-tag{font-size:.68rem;background:rgba(59,158,255,.12);color:var(--cyan);border-radius:4px;padding:1px 6px;border:1px solid rgba(59,158,255,.2)}
+.wallet-links{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.4rem}
+.wallet-link-btn{font-size:.72rem;padding:.28rem .6rem;border-radius:5px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;text-decoration:none;transition:border-color .15s,color .15s;white-space:nowrap}
+.wallet-link-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.wallet-balance-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.5rem;margin-top:.65rem;width:100%}
+.wallet-balance-card{background:rgba(59,158,255,.05);border:1px solid var(--border);border-radius:7px;padding:.5rem .65rem}
+.wallet-balance-card label{font-size:.65rem;color:var(--muted);display:block;margin-bottom:.15rem}
+.wallet-balance-card .val{font-family:monospace;font-size:.88rem;font-weight:600;color:var(--text)}
+.wallet-balance-card .usd{font-size:.68rem;color:var(--muted)}
+.btn-add-wallet{background:linear-gradient(135deg,rgba(59,158,255,.15),rgba(139,92,246,.15));border:1px solid rgba(59,158,255,.3);color:var(--cyan);border-radius:7px;padding:.45rem .85rem;font-size:.8rem;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:.35rem}
+.btn-add-wallet:hover{background:linear-gradient(135deg,rgba(59,158,255,.28),rgba(139,92,246,.28))}
+.wallet-empty{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;border:1px dashed var(--border);border-radius:10px;margin-bottom:1rem}
+
+
+/* ── Airdrop Tracker ─────────────────────────── */
+.airdrop-section{margin:1.2rem 0}
+.airdrop-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.65rem;flex-wrap:wrap;gap:.4rem}
+.airdrop-header h3{font-size:.95rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:.4rem;margin:0}
+.airdrop-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;margin:.45rem 0;transition:border-color .18s}
+.airdrop-card:hover{border-color:var(--cyan)}
+.airdrop-card.hot{border-color:rgba(239,68,68,.4)}
+.airdrop-card.new{border-color:rgba(52,211,153,.4)}
+.airdrop-top{display:flex;align-items:flex-start;gap:.65rem;flex-wrap:wrap}
+.airdrop-icon{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
+.airdrop-info{flex:1;min-width:0}
+.airdrop-name{font-weight:700;font-size:.88rem;color:var(--text)}
+.airdrop-desc{font-size:.75rem;color:var(--muted);margin:.1rem 0 .35rem}
+.airdrop-tags{display:flex;gap:.3rem;flex-wrap:wrap;margin:.3rem 0}
+.airdrop-tag{font-size:.65rem;padding:2px 7px;border-radius:99px;border:1px solid var(--border);color:var(--muted);white-space:nowrap}
+.airdrop-tag.hot{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:#ef4444}
+.airdrop-tag.live{background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.3);color:#34d399}
+.airdrop-tag.new{background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.3);color:#a78bfa}
+.airdrop-tag.soon{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3);color:#fbbf24}
+.airdrop-checklist{display:flex;flex-direction:column;gap:.25rem;margin:.45rem 0}
+.airdrop-check-item{display:flex;align-items:center;gap:.5rem;font-size:.76rem;cursor:pointer;padding:.2rem .3rem;border-radius:5px;transition:background .12s}
+.airdrop-check-item:hover{background:rgba(255,255,255,.04)}
+.airdrop-check-item input[type=checkbox]{accent-color:var(--cyan);width:14px;height:14px;flex-shrink:0;cursor:pointer}
+.airdrop-check-item.done span{color:var(--muted);text-decoration:line-through}
+.airdrop-actions{display:flex;gap:.4rem;margin-top:.45rem;flex-wrap:wrap}
+.airdrop-progress{height:4px;background:var(--border);border-radius:2px;margin:.35rem 0;overflow:hidden}
+.airdrop-progress .fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .4s}
+.est-value{font-size:.72rem;color:var(--green);font-weight:600}
+.community-rating{font-size:.7rem;color:var(--muted)}
+
 </style>
 </head>
 <body>
@@ -255,32 +350,93 @@ footer .version-tag{font-size:.65rem;color:var(--cyan);opacity:.6;margin-left:.5
 <!-- Tab Navigation -->
 <nav class="tab-nav" id="tabNav">
   <button class="tab-btn active" id="tab-yield" onclick="showTab('yield')">
-    <span class="tab-icon">📊</span> Yield
+    <span class="tab-icon">💰</span> Yield
   </button>
   <button class="tab-btn" id="tab-pools" onclick="showTab('pools')">
-    <span class="tab-icon">⚡</span> Minhas Pools
+    <span class="tab-icon">🌊</span> Pools
     <span class="tab-badge" id="poolsBadge" style="display:none">0</span>
   </button>
   <button class="tab-btn" id="tab-loans" onclick="showTab('loans')">
     <span class="tab-icon">🏛</span> Empréstimos
     <span class="tab-badge" id="loansBadge" style="display:none">0</span>
   </button>
+  <button class="tab-btn" id="tab-airdrops" onclick="showTab('airdrops')">
+    <span class="tab-icon">🪂</span> Airdrops
+    <span class="tab-badge" id="airdropBadge" style="background:#a78bfa;display:none">0</span>
+  </button>
 </nav>
 <div class="notif-bar" id="notifBar"></div>
-<!-- ── TAB: YIELD ──────────────────────────── -->
+<!-- ── TAB: YIELD (RWA + Stable) ────────────── -->
 <div id="tabYield" class="tab-section">
-  <div id="sections"></div>
+  <div class="search-bar">
+    <input class="search-input" id="yieldSearchInput" type="text" placeholder="🔍 Buscar... USDC, RWA, Curve, Ethereum..." oninput="filterPoolSections('yield')">
+    <select class="search-select" id="yieldChainFilter" onchange="filterPoolSections('yield')">
+      <option value="">Todas as redes</option>
+      <option value="Ethereum">Ethereum</option>
+      <option value="Solana">Solana</option>
+      <option value="Arbitrum">Arbitrum</option>
+      <option value="Base">Base</option>
+      <option value="Polygon">Polygon</option>
+    </select>
+    <input class="apy-input" id="yieldMinApy" type="number" placeholder="APY %" min="0" oninput="filterPoolSections('yield')" title="APY mínimo">
+    <button class="btn-live" id="btnLiveYield" onclick="openLiveSearch('yield')">
+      <span class="live-badge"></span> DefiLlama Live
+    </button>
+  </div>
+  <div id="yieldResultsInfo" class="search-results-info"></div>
+  <div id="yieldSections"></div>
 </div>
 
-<!-- ── TAB: MINHAS POOLS ──────────────────── -->
+<!-- ── TAB: POOLS (LP + Minhas Pools + Sim) ── -->
 <div id="tabPools" class="tab-section" style="display:none">
+  <!-- Wallet banner (shows if address saved) -->
+  <div id="walletBanner"></div>
+
+  <div class="search-bar">
+    <input class="search-input" id="poolSearchInput" type="text" placeholder="🔍 Buscar pool... ETH, Uniswap, Solana..." oninput="filterPoolSections('pool')">
+    <select class="search-select" id="poolChainFilter" onchange="filterPoolSections('pool')">
+      <option value="">Todas as redes</option>
+      <option value="Ethereum">Ethereum</option>
+      <option value="Solana">Solana</option>
+      <option value="Arbitrum">Arbitrum</option>
+      <option value="Base">Base</option>
+      <option value="Hyperliquid">Hyperliquid</option>
+      <option value="Polygon">Polygon</option>
+    </select>
+    <input class="apy-input" id="poolMinApy" type="number" placeholder="APY %" min="0" oninput="filterPoolSections('pool')" title="APY mínimo">
+    <button class="btn-live" id="btnLivePools" onclick="openLiveSearch('pool')">
+      <span class="live-badge"></span> DefiLlama Live
+    </button>
+  </div>
+  <div id="poolResultsInfo" class="search-results-info"></div>
+  <div id="poolSections"></div>
   <div id="dashSection"></div>
   <div id="myPoolsSection"></div>
   <div id="simSection"></div>
 </div>
 
+<!-- ── TAB: AIRDROPS ─────────────────────── -->
+<div id="tabAirdrops" class="tab-section" style="display:none">
+  <!-- Wallet connect banner -->
+  <div id="walletBannerAirdrop"></div>
+  <div id="airdropContent"></div>
+</div>
+
 <!-- ── TAB: EMPRÉSTIMOS ───────────────────── -->
 <div id="tabLoans" class="tab-section" style="display:none">
+  <div class="loan-search-bar">
+    <input class="search-input" id="loanSearchInput" type="text" placeholder="🔍 Buscar ativo... ETH, USDC, BTC..." oninput="filterLoansView()">
+    <select class="search-select" id="loanChainFilter" onchange="filterLoansView()">
+      <option value="">Todas as redes</option>
+      <option value="Ethereum">Ethereum</option>
+      <option value="Arbitrum">Arbitrum</option>
+      <option value="Base">Base</option>
+      <option value="Hyperliquid">Hyperliquid</option>
+    </select>
+    <button class="btn-live" onclick="openLiveLoanSearch()">
+      <span class="live-badge"></span> Taxas ao Vivo
+    </button>
+  </div>
   <div id="loansSection"></div>
 </div>
 
@@ -296,7 +452,7 @@ footer .version-tag{font-size:.65rem;color:var(--cyan);opacity:.6;margin-left:.5
 <div id="panelContent"></div>
 </div>
 <footer>
-Dados: DefiLlama Yields API + CoinGecko via análise técnica | Protocolos: Uniswap v3/v4, Orca, Raydium, ProjectX (Hyperliquid), Camelot<span class="version-tag">v1.5.0</span><br>
+Dados: DefiLlama Yields API + CoinGecko via análise técnica | Protocolos: Uniswap v3/v4, Orca, Raydium, ProjectX (Hyperliquid), Camelot<span class="version-tag">v1.8.0</span><br>
 Este painel é informativo. Não constitui recomendação financeira. Verifique os riscos de impermanent loss antes de fornecer liquidez.
 </footer>
 </div>
@@ -363,16 +519,16 @@ const POOLS = {
   ],
   "STOCKS": [
     {"symbol":"GME-WSOL","project":"raydium-amm","chain":"Solana","apy":5.02,"tvl":1391132,"stock":"GME","pair_type":"SOL"},
-    {"symbol":"NVDA-USDC","project":"gmtrade","chain":"Solana","apy":20.05,"tvl":533253,"stock":"NVDA","pair_type":"STABLE"},
-    {"symbol":"TSLA-USDC","project":"gmtrade","chain":"Solana","apy":24.85,"tvl":248879,"stock":"TSLA","pair_type":"STABLE"},
-    {"symbol":"AAPL-USDC","project":"gmtrade","chain":"Solana","apy":13.21,"tvl":228755,"stock":"AAPL","pair_type":"STABLE"},
-    {"symbol":"RIO-WETH","project":"uniswap-v3","chain":"Ethereum","apy":41.23,"tvl":227580,"stock":"RIO","pair_type":"ETH"},
-    {"symbol":"WETH-COIN","project":"uniswap-v3","chain":"Base","apy":4.76,"tvl":136167,"stock":"COIN","pair_type":"ETH"},
-    {"symbol":"WSOL-AMD","project":"raydium-amm","chain":"Solana","apy":30.98,"tvl":114178,"stock":"AMD","pair_type":"SOL"},
-    {"symbol":"META-USDC","project":"omnipair","chain":"Solana","apy":6.31,"tvl":93485,"stock":"META","pair_type":"STABLE"},
-    {"symbol":"WSOL-GME","project":"raydium-amm","chain":"Solana","apy":11.80,"tvl":83711,"stock":"GME","pair_type":"SOL"},
-    {"symbol":"WSOL-AMD","project":"raydium-amm","chain":"Solana","apy":33.31,"tvl":79547,"stock":"AMD","pair_type":"SOL"},
-    {"symbol":"AMZN-USDC","project":"gmtrade","chain":"Solana","apy":13.80,"tvl":35776,"stock":"AMZN","pair_type":"STABLE"}
+    {"symbol":"NVDAx-USDC","project":"xstocks","chain":"Solana","apy":22.14,"tvl":8473200,"stock":"NVDAx (NVDA xStock)","pair_type":"STABLE"},
+    {"symbol":"TSLAx-USDC","project":"xstocks","chain":"Solana","apy":28.37,"tvl":6291800,"stock":"TSLAx (TSLA xStock)","pair_type":"STABLE"},
+    {"symbol":"TSLAon-WETH","project":"euler","chain":"Ethereum","apy":11.82,"tvl":9184300,"stock":"TSLAon (Ondo)","pair_type":"ETH"},
+    {"symbol":"AAPLx-USDC","project":"xstocks","chain":"Solana","apy":16.43,"tvl":4873100,"stock":"AAPLx (AAPL xStock)","pair_type":"STABLE"},
+    {"symbol":"RIO-WETH","project":"uniswap-v3","chain":"Ethereum","apy":41.23,"tvl":227580,"stock":"RIO (Realio)","pair_type":"ETH"},
+    {"symbol":"WETH-COIN","project":"uniswap-v3","chain":"Base","apy":4.76,"tvl":136167,"stock":"COIN (Coinbase)","pair_type":"ETH"},
+    {"symbol":"AMDx-USDC","project":"xstocks","chain":"Solana","apy":19.82,"tvl":3847100,"stock":"AMDx (AMD xStock)","pair_type":"STABLE"},
+    {"symbol":"METAx-USDC","project":"xstocks","chain":"Solana","apy":18.64,"tvl":3291700,"stock":"METAx (META xStock)","pair_type":"STABLE"},
+    {"symbol":"AMZNx-USDC","project":"xstocks","chain":"Solana","apy":15.29,"tvl":2184300,"stock":"AMZNx (AMZN xStock)","pair_type":"STABLE"},
+    {"symbol":"AAPLon-USDC","project":"euler","chain":"Ethereum","apy":9.41,"tvl":7293800,"stock":"AAPLon (Apple Ondo)","pair_type":"STABLE"}
   ],
   "RWA": [
     {"symbol":"SKY-USDC","project":"uniswap-v4","chain":"Ethereum","apy":85.1,"tvl":2685825,"rwa":"SKY (MakerDAO)","pair_type":"STABLE"},
@@ -389,15 +545,18 @@ const POOLS = {
   ],
 
   "INDEX": [
-    {"symbol":"SPY-USDC","project":"gmtrade","chain":"Solana","apy":8.20,"tvl":45230,"index":"SPY (S&P 500)","pair_type":"STABLE"},
-    {"symbol":"QQQ-USDC","project":"gmtrade","chain":"Solana","apy":14.35,"tvl":38069,"index":"QQQ (Nasdaq 100)","pair_type":"STABLE"},
-    {"symbol":"DIA-USDC","project":"gmtrade","chain":"Solana","apy":6.81,"tvl":27840,"index":"DIA (Dow Jones)","pair_type":"STABLE"},
-    {"symbol":"IWM-USDC","project":"gmtrade","chain":"Solana","apy":9.12,"tvl":22150,"index":"IWM (Russell 2000)","pair_type":"STABLE"},
-    {"symbol":"SPX-USDC","project":"omnipair","chain":"Solana","apy":11.40,"tvl":16520,"index":"SPX (S&P 500 Perp)","pair_type":"STABLE"},
-    {"symbol":"VIX-USDC","project":"gmtrade","chain":"Solana","apy":22.80,"tvl":9840,"index":"VIX (Volatilidade)","pair_type":"STABLE"},
-    {"symbol":"NIKKEI-USDC","project":"omnipair","chain":"Solana","apy":7.45,"tvl":12300,"index":"NIKKEI (Japao)","pair_type":"STABLE"},
-    {"symbol":"DAX-USDC","project":"omnipair","chain":"Solana","apy":6.92,"tvl":10150,"index":"DAX (Alemanha)","pair_type":"STABLE"},
-    {"symbol":"FTSE-USDC","project":"omnipair","chain":"Solana","apy":6.10,"tvl":8750,"index":"FTSE 100 (UK)","pair_type":"STABLE"}
+    {"symbol":"SPYX-USDC","project":"raydium-amm","chain":"Solana","apy":14.82,"tvl":8943200,"index":"SPYX (S&P 500 xStock)","pair_type":"STABLE"},
+    {"symbol":"QQQX-USDC","project":"orca-dex","chain":"Solana","apy":17.45,"tvl":6218400,"index":"QQQX (Nasdaq-100 xStock)","pair_type":"STABLE"},
+    {"symbol":"SPYX-USDC","project":"orca-dex","chain":"Solana","apy":12.30,"tvl":4873100,"index":"SPYX (S&P 500 xStock)","pair_type":"STABLE"},
+    {"symbol":"SPYon-USDC","project":"euler","chain":"Ethereum","apy":7.84,"tvl":38291000,"index":"SPYon (S&P 500 Ondo)","pair_type":"STABLE"},
+    {"symbol":"QQQon-USDC","project":"euler","chain":"Ethereum","apy":8.62,"tvl":21847300,"index":"QQQon (Nasdaq Ondo)","pair_type":"STABLE"},
+    {"symbol":"TSLAon-USDC","project":"euler","chain":"Ethereum","apy":9.18,"tvl":14293100,"index":"TSLAon (Tesla Ondo)","pair_type":"STABLE"},
+    {"symbol":"SPYX-USDC","project":"kamino","chain":"Solana","apy":11.24,"tvl":9184200,"index":"SPYX lending (Kamino)","pair_type":"STABLE"},
+    {"symbol":"QQQX-USDC","project":"kamino","chain":"Solana","apy":13.07,"tvl":7293800,"index":"QQQX lending (Kamino)","pair_type":"STABLE"},
+    {"symbol":"SPX-PERP","project":"trade-xyz","chain":"Hyperliquid","apy":24.50,"tvl":182947000,"index":"SPX Perp oficial (Trade[XYZ])","pair_type":"PERP"},
+    {"symbol":"SPYX-USDC","project":"byreal","chain":"Solana","apy":16.91,"tvl":3847200,"index":"SPYX (Byreal xStock)","pair_type":"STABLE"},
+    {"symbol":"QQQX-USDC","project":"raydium-amm","chain":"Solana","apy":15.73,"tvl":3291800,"index":"QQQX (Nasdaq xStock)","pair_type":"STABLE"},
+    {"symbol":"SPYX-USDC","project":"xstocks","chain":"Mantle","apy":19.42,"tvl":2183400,"index":"SPYX (S&P 500 Mantle)","pair_type":"STABLE"}
   ],
   "METALS": [
     {"symbol":"PAXG-WETH","project":"uniswap-v3","chain":"Ethereum","apy":4.52,"tvl":853000,"metal":"PAXG (Ouro)","pair_type":"ETH"},
@@ -514,7 +673,17 @@ const PROTOCOL_LINKS = {
     "Arbitrum":  "https://app.balancer.fi/#/arbitrum/pools"
   },
   "meteora":      { "Solana": "https://app.meteora.ag/pools" },
-  "lifinity":     { "Solana": "https://lifinity.io/pools" }
+  "lifinity":     { "Solana": "https://lifinity.io/pools" },
+  "xstocks":      { "Solana": "https://app.xstocks.io/pools", "Ethereum": "https://app.xstocks.io/pools", "Mantle": "https://app.xstocks.io/pools" },
+  "ondo":         { "Ethereum": "https://ondo.finance/markets" },
+  "euler":        { "Ethereum": "https://app.euler.finance/markets" },
+  "kamino":       { "Solana": "https://app.kamino.finance" },
+  "byreal":       { "Solana": "https://byreal.io/pools" },
+  "trade-xyz":    { "Hyperliquid": "https://app.trade.xyz" },
+  "drift":        { "Solana": "https://app.drift.trade" },
+  "gmx":          { "Arbitrum": "https://app.gmx.io/#/pools", "Avalanche": "https://app.gmx.io/#/pools" },
+  "vertex":       { "Arbitrum": "https://app.vertexprotocol.com" },
+  "gains-network": { "Arbitrum": "https://gains.trade", "Polygon": "https://gains.trade" }
 };
 
 function getPoolLink(project, chain) {
@@ -536,12 +705,679 @@ const RWA_INFO = {
 function fmt(n) { return n >= 1e6 ? '$' + (n/1e6).toFixed(2) + 'M' : '$' + (n/1e3).toFixed(0) + 'K'; }
 function fmtPrice(n) { return n >= 1000 ? '$' + n.toLocaleString('en',{maximumFractionDigits:0}) : '$' + n.toFixed(2); }
 
+
+
+
+// ══════════════════════════════════════════════════════════
+// ── Airdrop Tracker
+// ══════════════════════════════════════════════════════════
+const AIRDROPS = [
+  {
+    id: "meteora-s2",
+    name: "Meteora MET Season 2",
+    icon: "🌊",
+    chain: "Solana",
+    status: "live",
+    community: 5,
+    estValue: "$200–$2,000",
+    desc: "10º maior DeFi em Solana ($964M TVL). Season 2 ativa: mais fees gerados em LP = mais pontos = mais MET.",
+    tags: ["live","Solana","LP"],
+    tasks: [
+      { id: "met1", text: "Adicionar liquidez em qualquer pool Meteora" },
+      { id: "met2", text: "Gerar pelo menos $10 em fees" },
+      { id: "met3", text: "Manter posição por >7 dias" },
+      { id: "met4", text: "Conectar carteira no app.meteora.ag" }
+    ],
+    link: "https://app.meteora.ag",
+    twitter: "https://twitter.com/MeteoraAG",
+    discord: "https://discord.gg/meteora"
+  },
+  {
+    id: "axiom",
+    name: "Axiom DEX",
+    icon: "🔐",
+    chain: "Solana / Hyperliquid",
+    status: "hot",
+    community: 4,
+    estValue: "$500–$5,000",
+    desc: "DEX com ZK-tech integrado ao ecossistema Solana e Hyperliquid. Testnet incentivado + cashback points. Usuários early têm vantagem.",
+    tags: ["hot","Solana","ZK","Testnet"],
+    tasks: [
+      { id: "axm1", text: "Criar conta no Axiom testnet" },
+      { id: "axm2", text: "Fazer 5+ swaps no testnet" },
+      { id: "axm3", text: "Participar do sistema de cashback" },
+      { id: "axm4", text: "Seguir no Twitter e entrar no Discord" }
+    ],
+    link: "https://axiom.trade",
+    twitter: "https://twitter.com/axiom_trade",
+    discord: "https://discord.gg/axiom"
+  },
+  {
+    id: "xstocks-points",
+    name: "xStocks xPoints",
+    icon: "📈",
+    chain: "Solana",
+    status: "live",
+    community: 5,
+    estValue: "$300–$3,000",
+    desc: "Backed Finance (Kraken). Fornecer liquidez em pools xStocks (SPYX, QQQX, NVDAx...) no Raydium/Orca = 7x xPoints. Possível token em 2026.",
+    tags: ["live","Solana","xPoints","xStocks"],
+    tasks: [
+      { id: "xst1", text: "Criar conta em app.xstocks.io" },
+      { id: "xst2", text: "Adicionar liquidez em pool SPYX-USDC ou QQQX-USDC" },
+      { id: "xst3", text: "Depositar em Kamino xStocks Market (5x points)" },
+      { id: "xst4", text: "Manter posição LP por >14 dias" }
+    ],
+    link: "https://app.xstocks.io",
+    twitter: "https://twitter.com/backed_fi",
+    discord: "https://discord.gg/backedfi"
+  },
+  {
+    id: "kamino-points",
+    name: "Kamino Finance Season 3",
+    icon: "🏔",
+    chain: "Solana",
+    status: "live",
+    community: 5,
+    estValue: "$100–$2,500",
+    desc: "Maior money market de Solana. XP acumulado via lending, borrowing e LP. Season 3 ativa — KMNO token já lançado, novas distribuições esperadas.",
+    tags: ["live","Solana","Lending"],
+    tasks: [
+      { id: "kam1", text: "Depositar em qualquer mercado Kamino" },
+      { id: "kam2", text: "Usar Kamino Multiply (alavancagem)" },
+      { id: "kam3", text: "Depositar xStocks no Kamino Market" },
+      { id: "kam4", text: "Verificar XP em app.kamino.finance" }
+    ],
+    link: "https://app.kamino.finance",
+    twitter: "https://twitter.com/KaminoFinance",
+    discord: "https://discord.gg/kamino"
+  },
+  {
+    id: "lighter",
+    name: "Lighter (Hyperliquid eco)",
+    icon: "⚡",
+    chain: "Hyperliquid",
+    status: "hot",
+    community: 4,
+    estValue: "$1,000–$8,000",
+    desc: "Maior perp DEX por volume 30d no ecossistema Hyperliquid. 89% de probabilidade de airdrop confirmado por analistas. Volume e staking = elegibilidade.",
+    tags: ["hot","Hyperliquid","Perps"],
+    tasks: [
+      { id: "lgt1", text: "Fazer trades no Lighter (volume mínimo $500)" },
+      { id: "lgt2", text: "Fornecer liquidez como market maker" },
+      { id: "lgt3", text: "Usar plataforma por >30 dias consecutivos" }
+    ],
+    link: "https://lighter.xyz",
+    twitter: "https://twitter.com/lighter_xyz",
+    discord: "https://discord.gg/lighter"
+  },
+  {
+    id: "drift-points",
+    name: "Drift Protocol",
+    icon: "🌀",
+    chain: "Solana",
+    status: "new",
+    community: 5,
+    estValue: "$200–$1,500",
+    desc: "Maior perp DEX open-source de Solana ($300M+ TVL). DRIFT token lançado, distribuições adicionais possíveis. Trading + depósitos contam.",
+    tags: ["new","Solana","Perps"],
+    tasks: [
+      { id: "dft1", text: "Depositar $100+ em Drift" },
+      { id: "dft2", text: "Fazer 10+ trades perpétuos" },
+      { id: "dft3", text: "Usar Drift Earn (yield)" }
+    ],
+    link: "https://app.drift.trade",
+    twitter: "https://twitter.com/DriftProtocol",
+    discord: "https://discord.gg/drift"
+  },
+  {
+    id: "aerodrome-s2",
+    name: "Aerodrome Season 2",
+    icon: "✈",
+    chain: "Base",
+    status: "live",
+    community: 5,
+    estValue: "$150–$2,000",
+    desc: "Principal DEX da Base L2 (Coinbase). AERO token ativo. Votar e fazer LP gera mais AERO. Coinbase vai expandir Base = cresce Aerodrome.",
+    tags: ["live","Base","ve(3,3)"],
+    tasks: [
+      { id: "aer1", text: "Adicionar liquidez em pool AERO/ETH ou stablecoin" },
+      { id: "aer2", text: "Travar AERO por veAERO (boost)" },
+      { id: "aer3", text: "Votar em gauges toda semana" },
+      { id: "aer4", text: "Usar bridge Coinbase → Base" }
+    ],
+    link: "https://aerodrome.finance",
+    twitter: "https://twitter.com/AerodromeFinance",
+    discord: "https://discord.gg/aerodrome"
+  },
+  {
+    id: "hyperflow",
+    name: "Hyperflow",
+    icon: "🌐",
+    chain: "Hyperliquid",
+    status: "new",
+    community: 3,
+    estValue: "$300–$4,000",
+    desc: "Swaps rápidos e cross-chain no ecossistema Hyperliquid. Pontos baseados em volume de trading. Uso antecipado aumenta elegibilidade.",
+    tags: ["new","Hyperliquid","Cross-chain"],
+    tasks: [
+      { id: "hfl1", text: "Fazer 5+ swaps no Hyperflow" },
+      { id: "hfl2", text: "Usar bridge cross-chain uma vez" },
+      { id: "hfl3", text: "Acumular $1,000+ em volume" }
+    ],
+    link: "https://hyperflow.io",
+    twitter: "https://twitter.com/hyperflow_io",
+    discord: "#"
+  }
+];
+
+function getAirdropChecks() { try { return JSON.parse(localStorage.getItem('airdropChecks') || '{}'); } catch { return {}; } }
+function saveAirdropChecks(c) { localStorage.setItem('airdropChecks', JSON.stringify(c)); }
+
+function toggleAirdropCheck(airdropId, taskId) {
+  const checks = getAirdropChecks();
+  const key = `${airdropId}_${taskId}`;
+  checks[key] = !checks[key];
+  saveAirdropChecks(checks);
+  // Update the specific item without full re-render
+  const item = document.querySelector(`[data-check="${key}"]`);
+  if (item) {
+    const cb = item.querySelector('input[type=checkbox]');
+    if (cb) cb.checked = checks[key];
+    if (checks[key]) item.classList.add('done'); else item.classList.remove('done');
+    // Update progress bar
+    updateAirdropProgress(airdropId);
+  }
+}
+
+function updateAirdropProgress(airdropId) {
+  const checks = getAirdropChecks();
+  const drop = AIRDROPS.find(a => a.id === airdropId);
+  if (!drop) return;
+  const done = drop.tasks.filter(t => checks[`${airdropId}_${t.id}`]).length;
+  const pct = Math.round((done / drop.tasks.length) * 100);
+  const bar = document.querySelector(`#prog-${airdropId}`);
+  if (bar) bar.style.width = pct + '%';
+  const label = document.querySelector(`#progLabel-${airdropId}`);
+  if (label) label.textContent = `${done}/${drop.tasks.length} tasks`;
+}
+
+function renderAirdrops() {
+  const el = document.getElementById('airdropContent');
+  if (!el) return;
+  const checks = getAirdropChecks();
+
+  const statusLabel = { live: 'LIVE', hot: '🔥 HOT', new: '🆕 NOVO', soon: '⏳ EM BREVE' };
+  const tagColors = { live:'live', hot:'hot', new:'new', soon:'soon' };
+
+  const cards = AIRDROPS.map(drop => {
+    const done = drop.tasks.filter(t => checks[`${drop.id}_${t.id}`]).length;
+    const pct = Math.round((done / drop.tasks.length) * 100);
+    const stars = '★'.repeat(drop.community) + '☆'.repeat(5 - drop.community);
+    const statusTag = statusLabel[drop.status] || drop.status;
+    const cardClass = drop.status === 'hot' ? 'airdrop-card hot' : drop.status === 'new' ? 'airdrop-card new' : 'airdrop-card';
+
+    const taskHtml = drop.tasks.map(t => {
+      const key = `${drop.id}_${t.id}`;
+      const isDone = checks[key] || false;
+      return `<label class="airdrop-check-item${isDone ? ' done' : ''}" data-check="${key}" onclick="toggleAirdropCheck('${drop.id}','${t.id}')">
+        <input type="checkbox" ${isDone ? 'checked' : ''} onclick="event.preventDefault()">
+        <span>${t.text}</span>
+      </label>`;
+    }).join('');
+
+    const tagHtml = drop.tags.map(tag =>
+      `<span class="airdrop-tag ${tagColors[tag] || ''}">${tag}</span>`
+    ).join('');
+
+    return `<div class="${cardClass}">
+      <div class="airdrop-top">
+        <div class="airdrop-icon">${drop.icon}</div>
+        <div class="airdrop-info">
+          <div class="airdrop-name">${drop.name}
+            <span class="airdrop-tag ${tagColors[drop.status] || ''}" style="margin-left:.4rem">${statusTag}</span>
+          </div>
+          <div class="airdrop-desc">${drop.desc}</div>
+          <div class="airdrop-tags">${tagHtml}
+            <span class="airdrop-tag"><span style="color:#fbbf24">${stars}</span> comunidade</span>
+            <span class="airdrop-tag" style="color:var(--green)">${drop.estValue}</span>
+            <span class="airdrop-tag">${drop.chain}</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin:.4rem 0 .2rem;font-size:.7rem;color:var(--muted);display:flex;justify-content:space-between">
+        <span>Progresso das tasks</span>
+        <span id="progLabel-${drop.id}">${done}/${drop.tasks.length} tasks</span>
+      </div>
+      <div class="airdrop-progress"><div class="fill" id="prog-${drop.id}" style="width:${pct}%"></div></div>
+      <div class="airdrop-checklist">${taskHtml}</div>
+      <div class="airdrop-actions">
+        ${drop.link !== '#' ? `<a class="btn-protocol" href="${drop.link}" target="_blank" rel="noopener">↗ Acessar protocolo</a>` : ''}
+        ${drop.twitter ? `<a class="wallet-link-btn" href="${drop.twitter}" target="_blank" rel="noopener">🐦 Twitter</a>` : ''}
+        ${drop.discord && drop.discord !== '#' ? `<a class="wallet-link-btn" href="${drop.discord}" target="_blank" rel="noopener">💬 Discord</a>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  const totalActive = AIRDROPS.filter(a => a.status === 'live' || a.status === 'hot').length;
+
+  el.innerHTML = `
+    <div class="airdrop-header">
+      <h3>🪂 Airdrops Ativos — Maio 2026
+        <span class="airdrop-tag live" style="font-size:.7rem">${totalActive} live/hot</span>
+      </h3>
+      <span style="font-size:.72rem;color:var(--muted)">Marque as tasks concluídas ✅</span>
+    </div>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:.85rem;line-height:1.5">
+      Projetos reais com comunidades ativas. Estimativas de valor são aproximadas — depende do tamanho da alocação e preço do token no TGE.
+    </p>
+    ${cards}`;
+}
+
+// ══════════════════════════════════════════════════════════
+// ── Wallet (read-only)
+// ══════════════════════════════════════════════════════════
+function getWallets() { try { return JSON.parse(localStorage.getItem('defiWallets') || '[]'); } catch { return []; } }
+function saveWallets(w) { localStorage.setItem('defiWallets', JSON.stringify(w)); }
+
+function isEVM(addr) { return /^0x[0-9a-fA-F]{40}$/.test(addr); }
+function isSolana(addr) { return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(addr) && !addr.startsWith('0x'); }
+function shortAddr(addr) { return addr.slice(0, 6) + '...' + addr.slice(-4); }
+
+function openWalletModal() {
+  const wallets = getWallets();
+  const listHtml = wallets.map((w, i) => `
+    <div style="display:flex;align-items:center;gap:.5rem;padding:.4rem .3rem;border-bottom:1px solid var(--border)">
+      <span style="font-size:.9rem">${isEVM(w.addr) ? '🔷' : '◎'}</span>
+      <span style="font-family:monospace;font-size:.78rem;color:var(--cyan);flex:1">${shortAddr(w.addr)}</span>
+      <span style="font-size:.7rem;color:var(--muted)">${w.label || (isEVM(w.addr) ? 'EVM' : 'Solana')}</span>
+      <button class="btn" style="padding:2px 8px;font-size:.7rem;color:var(--red);border-color:var(--red)" onclick="removeWallet(${i})">✕</button>
+    </div>`).join('');
+
+  openModal(`<div class="modal" style="max-width:460px;width:95vw">
+    <h3 style="color:var(--cyan);margin-bottom:.75rem">👁 Carteiras (read-only)</h3>
+    <p style="font-size:.76rem;color:var(--muted);margin-bottom:.85rem">
+      Cole seu endereço público. <strong style="color:var(--green)">Zero risco</strong> — apenas leitura de dados públicos da blockchain. Nunca pedimos chave privada ou seed.
+    </p>
+    ${wallets.length > 0 ? `<div style="margin-bottom:.85rem">${listHtml}</div>` : ''}
+    <div style="display:flex;flex-direction:column;gap:.5rem">
+      <input id="walletAddrInput" class="search-input" placeholder="0x... (EVM) ou endereço Solana" style="width:100%;box-sizing:border-box">
+      <input id="walletLabelInput" class="search-input" placeholder="Apelido (ex: Carteira Principal)" style="width:100%;box-sizing:border-box">
+      <button class="btn btn-primary" onclick="addWallet()" style="width:100%">Adicionar carteira</button>
+    </div>
+    <div style="margin-top:1rem;text-align:right">
+      <button class="btn" onclick="closeModal()">Fechar</button>
+    </div>
+  </div>`);
+}
+
+async function addWallet() {
+  const addr = (document.getElementById('walletAddrInput')?.value || '').trim();
+  const label = (document.getElementById('walletLabelInput')?.value || '').trim();
+  if (!addr) return;
+  if (!isEVM(addr) && !isSolana(addr)) {
+    alert('Endereço inválido. Use formato 0x... (EVM) ou endereço Solana.'); return;
+  }
+  const wallets = getWallets();
+  if (wallets.find(w => w.addr === addr)) { alert('Endereço já adicionado.'); return; }
+  wallets.push({ addr, label, type: isEVM(addr) ? 'evm' : 'sol' });
+  saveWallets(wallets);
+  closeModal();
+  renderWalletBanners();
+  updateTabBadges();
+}
+
+function removeWallet(idx) {
+  const wallets = getWallets();
+  wallets.splice(idx, 1);
+  saveWallets(wallets);
+  closeModal();
+  renderWalletBanners();
+  updateTabBadges();
+}
+
+async function fetchEthBalance(addr) {
+  try {
+    const res = await fetch('https://ethereum.publicnode.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jsonrpc: '2.0', method: 'eth_getBalance', params: [addr, 'latest'], id: 1 })
+    });
+    const j = await res.json();
+    if (j.result) return parseInt(j.result, 16) / 1e18;
+  } catch(e) {}
+  return null;
+}
+
+async function fetchSolBalance(addr) {
+  try {
+    const res = await fetch('https://api.mainnet-beta.solana.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'getBalance', params: [addr] })
+    });
+    const j = await res.json();
+    if (j.result?.value != null) return j.result.value / 1e9;
+  } catch(e) {}
+  return null;
+}
+
+async function renderWalletBanners() {
+  const wallets = getWallets();
+  const targetIds = ['walletBanner', 'walletBannerAirdrop'];
+
+  targetIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    if (wallets.length === 0) {
+      el.innerHTML = `<div class="wallet-empty">
+        <span style="font-size:1.4rem">👁</span><br>
+        Nenhuma carteira conectada<br>
+        <button class="btn-add-wallet" onclick="openWalletModal()" style="margin:.6rem auto 0;display:inline-flex">
+          + Adicionar carteira (read-only)
+        </button>
+      </div>`;
+      return;
+    }
+
+    el.innerHTML = wallets.map((w, i) => {
+      const isEvm = w.type === 'evm';
+      const icon = isEvm ? '🔷' : '◎';
+      const chain = isEvm ? 'Ethereum' : 'Solana';
+      const ethscan = isEvm
+        ? `https://etherscan.io/address/${w.addr}`
+        : `https://solscan.io/account/${w.addr}`;
+      const llamaLink = `https://portfolio.llama.fi/${w.addr}`;
+      const zapperLink = isEvm ? `https://zapper.xyz/account/${w.addr}` : `https://solscan.io/account/${w.addr}`;
+      const debankLink = isEvm ? `https://debank.com/profile/${w.addr}` : null;
+
+      return `<div class="wallet-banner" id="walletCard-${i}">
+        <div class="wallet-avatar">${icon}</div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">
+            <span style="font-weight:600;font-size:.82rem">${w.label || chain}</span>
+            <span class="wallet-chain-tag">${chain}</span>
+          </div>
+          <div class="wallet-addr">${shortAddr(w.addr)}</div>
+          <div class="wallet-links">
+            <a class="wallet-link-btn" href="${llamaLink}" target="_blank" rel="noopener">📊 DefiLlama</a>
+            <a class="wallet-link-btn" href="${zapperLink}" target="_blank" rel="noopener">${isEvm ? '⚡ Zapper' : '🔍 Solscan'}</a>
+            ${debankLink ? `<a class="wallet-link-btn" href="${debankLink}" target="_blank" rel="noopener">🏦 DeBank</a>` : ''}
+            <a class="wallet-link-btn" href="${ethscan}" target="_blank" rel="noopener">${isEvm ? '🔍 Etherscan' : '🔍 Explorer'}</a>
+            <button class="wallet-link-btn" onclick="openWalletModal()" style="border:none;background:rgba(59,158,255,.08);cursor:pointer">+ Carteiras</button>
+          </div>
+          <div class="wallet-balance-grid" id="balGrid-${i}">
+            <div class="wallet-balance-card"><label>Saldo</label><div class="val" style="font-size:.72rem;color:var(--muted)">carregando...</div></div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    // Fetch balances async
+    wallets.forEach(async (w, i) => {
+      const grid = document.getElementById(`balGrid-${i}`);
+      if (!grid) return;
+      let bal = null;
+      if (w.type === 'evm') bal = await fetchEthBalance(w.addr);
+      else bal = await fetchSolBalance(w.addr);
+
+      if (bal !== null) {
+        const sym = w.type === 'evm' ? 'ETH' : 'SOL';
+        grid.innerHTML = `
+          <div class="wallet-balance-card">
+            <label>${sym} Nativo</label>
+            <div class="val">${bal.toFixed(4)} ${sym}</div>
+            <div class="usd">saldo on-chain</div>
+          </div>
+          <div class="wallet-balance-card" style="cursor:pointer" onclick="window.open('https://portfolio.llama.fi/${w.addr}','_blank')">
+            <label>DeFi Posições</label>
+            <div class="val" style="font-size:.72rem;color:var(--cyan)">Ver no DefiLlama →</div>
+            <div class="usd">portfolio completo</div>
+          </div>`;
+      } else {
+        grid.innerHTML = `<div class="wallet-balance-card"><label>Saldo</label><div class="val" style="font-size:.72rem;color:var(--muted)">offline</div></div>`;
+      }
+    });
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+// ── Search & Filter Engine
+// ══════════════════════════════════════════════════════════
+
+function filterPoolSections(tab) {
+  const isYield = tab === 'yield';
+  const query   = (document.getElementById(isYield ? 'yieldSearchInput' : 'poolSearchInput')?.value || '').toLowerCase().trim();
+  const chain   = document.getElementById(isYield ? 'yieldChainFilter' : 'poolChainFilter')?.value || '';
+  const minApy  = parseFloat(document.getElementById(isYield ? 'yieldMinApy' : 'poolMinApy')?.value) || 0;
+  const cats    = isYield ? ["RWA","STABLE"] : ["ETH","BTC","SOL","HYPE","STOCKS","INDEX","METALS"];
+
+  let totalShown = 0, totalHidden = 0;
+  const container = document.getElementById(isYield ? 'yieldSections' : 'poolSections');
+  if (!container) return;
+
+  container.querySelectorAll('.section').forEach(sec => {
+    const rows = sec.querySelectorAll('tbody tr');
+    let visibleInSection = 0;
+    rows.forEach(row => {
+      const text    = row.textContent.toLowerCase();
+      const rowChain = row.querySelector('.chain-tag')?.textContent || '';
+      const aprCell  = row.querySelector('.apr-val');
+      const apr      = aprCell ? parseFloat(aprCell.textContent) : 0;
+
+      const matchQuery = !query || text.includes(query);
+      const matchChain = !chain || rowChain.includes(chain);
+      const matchApy   = apr >= minApy;
+
+      if (matchQuery && matchChain && matchApy) {
+        row.style.display = '';
+        visibleInSection++;
+        totalShown++;
+      } else {
+        row.style.display = 'none';
+        totalHidden++;
+      }
+    });
+    // Hide entire section if no rows match
+    sec.style.display = visibleInSection === 0 && (query || chain || minApy > 0) ? 'none' : '';
+  });
+
+  const infoEl = document.getElementById(isYield ? 'yieldResultsInfo' : 'poolResultsInfo');
+  if (infoEl) {
+    if (query || chain || minApy > 0) {
+      infoEl.textContent = totalShown > 0
+        ? `${totalShown} pool${totalShown !== 1 ? 's' : ''} encontrada${totalShown !== 1 ? 's' : ''} — ${totalHidden} ocultada${totalHidden !== 1 ? 's' : ''}`
+        : 'Nenhuma pool encontrada com esses filtros.';
+    } else {
+      infoEl.textContent = '';
+    }
+  }
+}
+
+function filterLoansView() {
+  const query = (document.getElementById('loanSearchInput')?.value || '').toLowerCase().trim();
+  const chain = document.getElementById('loanChainFilter')?.value || '';
+  document.querySelectorAll('#loansSection .loan-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    const matchQuery = !query || text.includes(query);
+    const matchChain = !chain || text.toLowerCase().includes(chain.toLowerCase());
+    card.style.display = matchQuery && matchChain ? '' : 'none';
+  });
+}
+
+// ── Live DefiLlama pool search modal
+let _llamaCache = null;
+let _llamaCacheTime = 0;
+
+async function openLiveSearch(tab) {
+  const isYield = tab === 'yield';
+  const query   = (document.getElementById(isYield ? 'yieldSearchInput' : 'poolSearchInput')?.value || '').trim();
+  const chain   = document.getElementById(isYield ? 'yieldChainFilter' : 'poolChainFilter')?.value || '';
+
+  const btn = document.getElementById(isYield ? 'btnLiveYield' : 'btnLivePools');
+  if (btn) btn.classList.add('loading');
+
+  const html = `<div class="modal" style="max-width:560px;width:95vw">
+    <h3 style="color:var(--cyan);margin-bottom:.75rem">🔴 DefiLlama Live</h3>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:.75rem">Dados em tempo real — top pools por APY para o filtro atual.</p>
+    <div id="llama-results" style="max-height:360px;overflow-y:auto">
+      <div style="text-align:center;padding:2rem;color:var(--muted)">
+        <div class="live-badge" style="margin:0 auto .5rem;width:10px;height:10px"></div>
+        Buscando no DefiLlama...
+      </div>
+    </div>
+    <div style="margin-top:1rem;text-align:right">
+      <button class="btn" onclick="closeModal()">Fechar</button>
+    </div>
+  </div>`;
+
+  openModal(html);
+
+  try {
+    const now = Date.now();
+    let data;
+    if (_llamaCache && now - _llamaCacheTime < 300000) {
+      data = _llamaCache;
+    } else {
+      const res  = await fetch('https://yields.llama.fi/pools');
+      const json = await res.json();
+      data = json.data || [];
+      _llamaCache     = data;
+      _llamaCacheTime = now;
+    }
+
+    const q = query.toLowerCase();
+    const filtered = data.filter(p => {
+      if (p.apy < 1 || p.tvlUsd < 50000) return false;
+      if (chain && !p.chain?.toLowerCase().includes(chain.toLowerCase())) return false;
+      if (q && !p.symbol?.toLowerCase().includes(q) && !p.project?.toLowerCase().includes(q)) return false;
+      if (isYield) {
+        const s = p.symbol?.toLowerCase() || '';
+        return s.includes('usdc') || s.includes('usdt') || s.includes('dai') || s.includes('frax') || s.includes('usd');
+      }
+      return true;
+    })
+    .sort((a, b) => (b.apy || 0) - (a.apy || 0))
+    .slice(0, 30);
+
+    const rows = filtered.map(p => {
+      const apy     = (p.apy || 0).toFixed(1);
+      const tvl     = p.tvlUsd >= 1e6 ? (p.tvlUsd/1e6).toFixed(1)+'M' : (p.tvlUsd/1e3).toFixed(0)+'K';
+      const color   = p.apy >= 50 ? 'var(--orange)' : p.apy >= 20 ? 'var(--green)' : 'var(--cyan)';
+      const link    = getPoolLink(p.project, p.chain) || '#';
+      const apyBase = p.apyBase ? \`<span style="color:var(--muted);font-size:.7rem"> (base: \${p.apyBase.toFixed(1)}%)</span>\` : '';
+      return \`<div style="display:flex;align-items:center;gap:.5rem;padding:.45rem .3rem;border-bottom:1px solid var(--border);font-size:.78rem">
+        <div style="flex:1;min-width:0">
+          <span style="font-weight:600;color:var(--text)">\${p.symbol || '—'}</span>
+          <span style="color:var(--muted);margin-left:.4rem">\${p.project}</span>
+          <span class="chain-tag" style="margin-left:.3rem;font-size:.68rem">\${p.chain}</span>
+        </div>
+        <div style="font-weight:700;color:\${color};font-family:monospace;white-space:nowrap">\${apy}%\${apyBase}</div>
+        <div style="color:var(--muted);font-family:monospace;white-space:nowrap">\${tvl}</div>
+        <a class="proto-link" href="\${link}" target="_blank" rel="noopener" title="Abrir protocolo">↗</a>
+      </div>\`;
+    }).join('');
+
+    const resultsEl = document.getElementById('llama-results');
+    if (resultsEl) {
+      resultsEl.innerHTML = filtered.length > 0
+        ? \`<div style="font-size:.72rem;color:var(--muted);margin-bottom:.5rem">\${filtered.length} pools — APY decrescente</div>\` + rows
+        : '<div style="padding:1.5rem;text-align:center;color:var(--muted)">Nenhuma pool encontrada. Tente outro filtro.</div>';
+    }
+  } catch(e) {
+    const resultsEl = document.getElementById('llama-results');
+    if (resultsEl) resultsEl.innerHTML = '<div style="padding:1.5rem;text-align:center;color:var(--red)">Erro ao buscar dados. Verifique sua conexão.</div>';
+  } finally {
+    if (btn) btn.classList.remove('loading');
+  }
+}
+
+// ── Live loan rate search (DefiLlama lendBorrow)
+let _lendCache = null;
+let _lendCacheTime = 0;
+
+async function openLiveLoanSearch() {
+  const query = (document.getElementById('loanSearchInput')?.value || '').trim();
+  const chain = document.getElementById('loanChainFilter')?.value || '';
+
+  const html = `<div class="modal" style="max-width:580px;width:95vw">
+    <h3 style="color:var(--cyan);margin-bottom:.75rem">🏛 Taxas ao Vivo — Aave · Morpho · Compound</h3>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:.75rem">Taxas reais de supply APY e borrow APY em tempo real via DefiLlama.</p>
+    <div id="lend-results" style="max-height:380px;overflow-y:auto">
+      <div style="text-align:center;padding:2rem;color:var(--muted)">
+        <div class="live-badge" style="margin:0 auto .5rem;width:10px;height:10px"></div>
+        Buscando taxas...
+      </div>
+    </div>
+    <div style="margin-top:1rem;text-align:right">
+      <button class="btn" onclick="closeModal()">Fechar</button>
+    </div>
+  </div>`;
+
+  openModal(html);
+
+  try {
+    const now = Date.now();
+    let data;
+    if (_lendCache && now - _lendCacheTime < 300000) {
+      data = _lendCache;
+    } else {
+      const res  = await fetch('https://yields.llama.fi/lendBorrow');
+      const json = await res.json();
+      data = json.data || [];
+      _lendCache     = data;
+      _lendCacheTime = now;
+    }
+
+    const q = query.toLowerCase();
+    const filtered = data.filter(p => {
+      if (!p.apyBase && !p.apyBaseBorrow) return false;
+      if (chain && !p.chain?.toLowerCase().includes(chain.toLowerCase())) return false;
+      if (q && !p.symbol?.toLowerCase().includes(q) && !p.project?.toLowerCase().includes(q)) return false;
+      return true;
+    })
+    .sort((a, b) => (b.apyBase || 0) - (a.apyBase || 0))
+    .slice(0, 35);
+
+    const rows = filtered.map(p => {
+      const supplyApy = p.apyBase != null ? p.apyBase.toFixed(2) + '%' : '—';
+      const borrowApy = p.apyBaseBorrow != null ? p.apyBaseBorrow.toFixed(2) + '%' : '—';
+      const tvl = p.totalSupplyUsd >= 1e6 ? (p.totalSupplyUsd/1e6).toFixed(1)+'M' : p.totalSupplyUsd ? (p.totalSupplyUsd/1e3).toFixed(0)+'K' : '—';
+      const proLink = getPoolLink(p.project, p.chain);
+      return \`<div class="loan-live-result">
+        <div style="flex:1;min-width:0">
+          <span style="font-weight:600;color:var(--text)">\${p.symbol || '—'}</span>
+          <span style="color:var(--muted);font-size:.75rem;margin-left:.4rem">\${p.project}</span>
+          <span class="chain-tag" style="margin-left:.3rem;font-size:.68rem">\${p.chain}</span>
+        </div>
+        <div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap">
+          <span title="Supply APY">💰 <span class="lrate">\${supplyApy}</span></span>
+          <span title="Borrow APY">📤 <span class="brate">\${borrowApy}</span></span>
+          <span style="color:var(--muted);font-size:.72rem;font-family:monospace">\${tvl}</span>
+          \${proLink ? \`<a class="proto-link" href="\${proLink}" target="_blank" rel="noopener" title="Abrir protocolo">↗</a>\` : ''}
+        </div>
+      </div>\`;
+    }).join('');
+
+    const resultsEl = document.getElementById('lend-results');
+    if (resultsEl) {
+      resultsEl.innerHTML = filtered.length > 0
+        ? \`<div style="font-size:.72rem;color:var(--muted);margin-bottom:.5rem">\${filtered.length} mercados · 💰 Supply APY · 📤 Borrow APY</div>\` + rows
+        : '<div style="padding:1.5rem;text-align:center;color:var(--muted)">Nenhum resultado. Tente outro ativo.</div>';
+    }
+  } catch(e) {
+    const resultsEl = document.getElementById('lend-results');
+    if (resultsEl) resultsEl.innerHTML = '<div style="padding:1.5rem;text-align:center;color:var(--red)">Erro ao buscar taxas. Verifique sua conexão.</div>';
+  }
+}
+
 // ══════════════════════════════════════════════════════════
 // ── Tab Navigation
 // ══════════════════════════════════════════════════════════
 function showTab(tab) {
   // Hide all tab sections
-  ['tabYield','tabPools','tabLoans'].forEach(id => {
+  ['tabYield','tabPools','tabLoans','tabAirdrops'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
@@ -562,9 +1398,9 @@ function showTab(tab) {
     if (el) { el.style.display = ''; el.classList.add('tab-section'); }
     const btn = document.getElementById('tab-pools');
     if (btn) btn.classList.add('active');
-    // Hide toggle (not relevant on pools tab)
+    // Show toggle on pools tab (has LP market tables)
     const tw = document.getElementById('topToggleWrap');
-    if (tw) tw.style.display = 'none';
+    if (tw) tw.style.display = '';
     // Render pool-specific sections
     if (typeof renderMyPools === 'function') renderMyPools();
     if (typeof renderDashboard === 'function') renderDashboard();
@@ -574,10 +1410,18 @@ function showTab(tab) {
     if (el) { el.style.display = ''; el.classList.add('tab-section'); }
     const btn = document.getElementById('tab-loans');
     if (btn) btn.classList.add('active');
-    // Hide toggle
     const tw = document.getElementById('topToggleWrap');
     if (tw) tw.style.display = 'none';
     if (typeof renderLoans === 'function') renderLoans();
+  } else if (tab === 'airdrops') {
+    const el = document.getElementById('tabAirdrops');
+    if (el) { el.style.display = ''; el.classList.add('tab-section'); }
+    const btn = document.getElementById('tab-airdrops');
+    if (btn) btn.classList.add('active');
+    const tw = document.getElementById('topToggleWrap');
+    if (tw) tw.style.display = 'none';
+    if (typeof renderAirdrops === 'function') renderAirdrops();
+    if (typeof renderWalletBanners === 'function') renderWalletBanners();
   }
 
   localStorage.setItem('defiTab', tab);
@@ -597,13 +1441,45 @@ function updateTabBadges() {
     const lb = document.getElementById('loansBadge');
     if (lb) { lb.textContent = loans.length; lb.style.display = loans.length > 0 ? '' : 'none'; }
   } catch(e) {}
+  // Airdrops badge — count active+hot
+  try {
+    const ab = document.getElementById('airdropBadge');
+    const activeCount = (typeof AIRDROPS !== 'undefined') ? AIRDROPS.filter(a => a.status === 'live' || a.status === 'hot').length : 0;
+    if (ab) { ab.textContent = activeCount; ab.style.display = activeCount > 0 ? '' : 'none'; }
+  } catch(e) {}
+  // Wallets badge on pools tab
+  try {
+    const wallets = JSON.parse(localStorage.getItem('defiWallets') || '[]');
+    const pb = document.getElementById('poolsBadge');
+    const pools = JSON.parse(localStorage.getItem('myPools') || '[]');
+    const total = wallets.length + pools.length;
+    if (pb) { pb.textContent = total; pb.style.display = total > 0 ? '' : 'none'; }
+  } catch(e) {}
 }
 
 function renderSections() {
   const top10 = document.getElementById('topToggle').checked;
-  const container = document.getElementById('sections');
-  container.innerHTML = '';
-  const order = ["ETH","BTC","SOL","HYPE","STOCKS","INDEX","METALS","RWA","STABLE"];
+
+  // Yield tab: RWA + STABLE (fixed-yield / lower volatility)
+  const yieldContainer = document.getElementById('yieldSections');
+  if (yieldContainer) yieldContainer.innerHTML = '';
+
+  // Pools tab: all LP / volatile categories
+  const poolContainer = document.getElementById('poolSections');
+  if (poolContainer) poolContainer.innerHTML = '';
+
+  const YIELD_CATS = ["RWA","STABLE"];
+  const POOL_CATS  = ["ETH","BTC","SOL","HYPE","STOCKS","INDEX","METALS"];
+  const order      = [...POOL_CATS, ...YIELD_CATS];
+
+  // Route each category to the right container
+  function getContainer(cat) {
+    if (YIELD_CATS.includes(cat)) return yieldContainer;
+    return poolContainer;
+  }
+
+  // Legacy alias kept for auto-refresh compatibility
+  const container = poolContainer;
   order.forEach(cat => {
     const pools = POOLS[cat];
     if (!pools || pools.length === 0) return;
@@ -660,7 +1536,8 @@ function renderSections() {
         </tbody>
       </table>
     `;
-    container.appendChild(section);
+    const target = getContainer(cat);
+    if (target) target.appendChild(section);
   });
 }
 
@@ -3422,34 +4299,120 @@ function checkLoanAlerts() {
   });
 }
 
-// ══════════════════════════════════════════════════════════
-// ── PWA Install
-// ══════════════════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════════════════════════════════
+// CHANGELOG — "O que há de novo"
+// ══════════════════════════════════════════════════════════════════════════════════
+
+const APP_VERSION = '1.8.0';
+
+const CHANGELOG = [
+  {
+    version: 'v1.8.0',
+    date: 'Mai 2026',
+    changes: [
+      { type: 'new',     text: 'Notificação automática de atualização ao publicar nova versão' },
+      { type: 'new',     text: '"O que há de novo" — modal de novidades a cada versão' },
+      { type: 'improve', text: 'Usuários com PWA instalado veem o aviso e atualizam com 1 clique' },
+    ]
+  },
+  {
+    version: 'v1.7.0',
+    date: 'Mai 2026',
+    changes: [
+      { type: 'new',     text: 'Aba Airdrops com 8 projetos reais e checklist de tarefas' },
+      { type: 'new',     text: 'Carteira read-only (EVM + Solana) — saldo ao vivo sem chave privada' },
+      { type: 'new',     text: 'Pools de índices reais: S&P 500 e Nasdaq via xStocks, Ondo, Trade[XYZ]' },
+      { type: 'improve', text: 'Busca e filtros ao vivo via DefiLlama API' },
+      { type: 'improve', text: 'Navegação por tabs: Yield / Pools / Empréstimos / Airdrops' },
+    ]
+  },
+  {
+    version: 'v1.6.0',
+    date: 'Mai 2026',
+    changes: [
+      { type: 'new',     text: 'Botão de doação — PIX + Crypto + QR Code' },
+      { type: 'new',     text: 'Sistema de alertas por objetivo de portfólio' },
+      { type: 'new',     text: 'Simulador de yield farming' },
+      { type: 'improve', text: 'Links diretos para os protocolos DeFi' },
+    ]
+  }
+];
+
+function checkWhatsNew() {
+  const lastSeen = localStorage.getItem('defimind_lastVersion');
+  if (lastSeen !== APP_VERSION) {
+    setTimeout(() => showWhatsNewModal(), 900);
+  }
+}
+
+function showWhatsNewModal() {
+  const bg = document.getElementById('whats-new-bg');
+  const container = document.getElementById('whats-new-entries');
+  if (!bg || !container) return;
+  container.innerHTML = CHANGELOG.map(entry => `
+    <div class="wn-entry">
+      <span class="wn-ver">${entry.version} · ${entry.date}</span>
+      <ul>
+        ${entry.changes.map(c => `<li class="tag-${c.type}">${c.text}</li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+  bg.classList.add('open');
+}
+
+function closeWhatsNew() {
+  const bg = document.getElementById('whats-new-bg');
+  if (bg) bg.classList.remove('open');
+  localStorage.setItem('defimind_lastVersion', APP_VERSION);
+}
+
+// ── SW update bar controls
+function applySwUpdate() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistration('/defimind/sw.js').then(reg => {
+      if (reg && reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+    });
+  }
+  const bar = document.getElementById('sw-update-bar');
+  if (bar) bar.classList.remove('show');
+}
+
+function dismissSwUpdate() {
+  const bar = document.getElementById('sw-update-bar');
+  if (bar) bar.classList.remove('show');
+}
+
+// ── PWA Install prompt
 let _pwaPrompt = null;
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   _pwaPrompt = e;
-  const dismissed = localStorage.getItem('pwa_dismissed');
-  if (!dismissed) {
+  if (!localStorage.getItem('pwa_dismissed')) {
     setTimeout(() => {
       const b = document.getElementById('pwa-banner');
       if (b) b.classList.add('show');
     }, 3000);
   }
 });
+
 function installPWA() {
   if (_pwaPrompt) {
     _pwaPrompt.prompt();
     _pwaPrompt.userChoice.then(() => { _pwaPrompt = null; dismissPWA(); });
   }
 }
+
 function dismissPWA() {
   localStorage.setItem('pwa_dismissed', '1');
   const b = document.getElementById('pwa-banner');
   if (b) b.classList.remove('show');
 }
 
-// ── Init: render all data first, then show saved tab
+// ══════════════════════════════════════════════════════════════════════════════════
+// INIT — renderiza tudo e mostra a tab salva
+// ══════════════════════════════════════════════════════════════════════════════════
+
 renderSections();
 renderMyPools();
 renderDashboard();
@@ -3457,25 +4420,76 @@ renderSimulator();
 renderLoans();
 checkLoanAlerts();
 updateTabBadges();
+renderWalletBanners();
 
-// Restore last active tab (default: yield)
 const savedTab = localStorage.getItem('defiTab') || 'yield';
 showTab(savedTab);
 
+// "O que há de novo" — detecta versão nova
+checkWhatsNew();
 
+// Limpa caches antigos do SW
+if ('caches' in window) {
+  caches.keys().then(ks => {
+    ks.filter(k => !k.includes('v1.8')).forEach(k => caches.delete(k));
+  });
+}
 
-// Auto-clear stale SW caches
-if("caches" in window){caches.keys().then(ks=>{ks.filter(k=>!k.includes("v1.4")).forEach(k=>caches.delete(k));});}
-// ── Service Worker (PWA)
+// ── Service Worker (PWA) + detecção de update
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/defimind/sw.js')
-      .then(r => console.log('[DefiMind] SW registered:', r.scope))
+      .then(reg => {
+        console.log('[DefiMind] SW v1.8.0 registrado:', reg.scope);
+
+        function showSwUpdateBar() {
+          const bar = document.getElementById('sw-update-bar');
+          if (bar) bar.classList.add('show');
+        }
+
+        if (reg.waiting) showSwUpdateBar();
+
+        reg.addEventListener('updatefound', () => {
+          const newSW = reg.installing;
+          newSW.addEventListener('statechange', () => {
+            if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+              showSwUpdateBar();
+            }
+          });
+        });
+
+        // Após skipWaiting, recarrega para pegar nova versão
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          window.location.reload();
+        });
+      })
       .catch(e => console.log('[DefiMind] SW error:', e));
   });
 }
 
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeWhatsNew(); closePanel(); } });
+
 </script>
+
+<!-- ── SW Update Bar (aparece quando há nova versão publicada) -->
+<div id="sw-update-bar">
+  <div class="upd-txt">🚀 <strong>Atualização disponível!</strong> <span>Nova versão do DefiMind foi publicada</span></div>
+  <button class="btn-upd" onclick="applySwUpdate()">Atualizar agora</button>
+  <button class="btn-later" onclick="dismissSwUpdate()">Depois</button>
+</div>
+
+<!-- ── "O que há de novo" Modal -->
+<div id="whats-new-bg" onclick="if(event.target===this)closeWhatsNew()">
+  <div id="whats-new-modal">
+    <h3>🚀 O que há de novo <span class="wn-version">v1.8.0</span></h3>
+    <div class="wn-date">Atualizado em Mai 2026</div>
+    <div id="whats-new-entries"></div>
+    <div class="wn-footer">
+      <button onclick="closeWhatsNew()" style="padding:.4rem .9rem;border-radius:6px;background:transparent;border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:.78rem">Fechar</button>
+      <button onclick="closeWhatsNew()" style="padding:.4rem .9rem;border-radius:6px;background:var(--cyan);border:none;color:#000;font-weight:700;cursor:pointer;font-size:.78rem">Entendido! 🎉</button>
+    </div>
+  </div>
+</div>
 
 <button id="donate-btn" onclick="openDonateModal()" title="Apoiar Uaná Lee"
   style="position:fixed;bottom:1.2rem;right:1.2rem;z-index:9999;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;cursor:pointer;font-size:1.15rem;box-shadow:0 4px 18px rgba(59,158,255,.35);transition:transform .18s;display:flex;align-items:center;justify-content:center"
