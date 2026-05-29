@@ -1,4 +1,4 @@
-const CACHE = 'defimind-v1.3.1';
+const CACHE = 'defimind-v1.4.0';
 
 self.addEventListener('install', e => {
   self.skipWaiting();

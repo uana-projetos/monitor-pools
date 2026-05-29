@@ -212,6 +212,12 @@ footer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);font-
 /* footer version */
 footer .version-tag{font-size:.65rem;color:var(--cyan);opacity:.6;margin-left:.5rem}
 
+
+/* Protocol link button */
+.proto-link{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:5px;background:rgba(59,158,255,.12);border:1px solid rgba(59,158,255,.25);color:var(--cyan);font-size:.75rem;cursor:pointer;transition:background .15s,transform .12s;text-decoration:none;flex-shrink:0}
+.proto-link:hover{background:rgba(59,158,255,.28);transform:scale(1.1)}
+.btn-protocol{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;border-radius:6px;background:linear-gradient(135deg,rgba(59,158,255,.15),rgba(139,92,246,.15));border:1px solid rgba(59,158,255,.35);color:var(--cyan);font-size:.8rem;cursor:pointer;text-decoration:none;font-weight:500;transition:background .15s}
+.btn-protocol:hover{background:linear-gradient(135deg,rgba(59,158,255,.28),rgba(139,92,246,.28))}
 </style>
 </head>
 <body>
@@ -249,7 +255,7 @@ footer .version-tag{font-size:.65rem;color:var(--cyan);opacity:.6;margin-left:.5
 <div id="panelContent"></div>
 </div>
 <footer>
-Dados: DefiLlama Yields API + CoinGecko via análise técnica | Protocolos: Uniswap v3/v4, Orca, Raydium, ProjectX (Hyperliquid), Camelot<span class="version-tag">v1.3.1</span><br>
+Dados: DefiLlama Yields API + CoinGecko via análise técnica | Protocolos: Uniswap v3/v4, Orca, Raydium, ProjectX (Hyperliquid), Camelot<span class="version-tag">v1.4.0</span><br>
 Este painel é informativo. Não constitui recomendação financeira. Verifique os riscos de impermanent loss antes de fornecer liquidez.
 </footer>
 </div>
@@ -274,13 +280,27 @@ const POOLS = {
   ],
   "BTC": [
     {"symbol":"SOL-CBBTC","project":"orca-dex","chain":"Solana","apy":46.7,"tvl":6487950},
-    {"symbol":"WBTC-USDC","project":"uniswap-v4","chain":"Polygon","apy":10.09,"tvl":145465}
+    {"symbol":"WBTC-WETH","project":"uniswap-v3","chain":"Ethereum","apy":28.45,"tvl":42183200},
+    {"symbol":"WBTC-USDC","project":"uniswap-v3","chain":"Ethereum","apy":18.72,"tvl":31567800},
+    {"symbol":"cbBTC-WETH","project":"uniswap-v3","chain":"Base","apy":22.38,"tvl":8924100},
+    {"symbol":"cbBTC-USDC","project":"aerodrome","chain":"Base","apy":19.54,"tvl":5743200},
+    {"symbol":"WBTC-USDC","project":"camelot-v3","chain":"Arbitrum","apy":15.83,"tvl":4218900},
+    {"symbol":"WBTC-WETH","project":"camelot-v3","chain":"Arbitrum","apy":12.41,"tvl":3156400},
+    {"symbol":"WBTC-USDC","project":"uniswap-v4","chain":"Polygon","apy":10.09,"tvl":145465},
+    {"symbol":"cbBTC-WETH","project":"aerodrome","chain":"Base","apy":14.62,"tvl":2891300},
+    {"symbol":"WBTC-USDT","project":"curve","chain":"Ethereum","apy":8.34,"tvl":18743000}
   ],
   "SOL": [
     {"symbol":"SOL-WETH","project":"uniswap-v3","chain":"Arbitrum","apy":59.01,"tvl":100002},
     {"symbol":"WSOL-USDT","project":"raydium-amm","chain":"Solana","apy":41.53,"tvl":2184967},
+    {"symbol":"SOL-USDC","project":"orca-dex","chain":"Solana","apy":38.90,"tvl":9437800},
     {"symbol":"WETH-SOL","project":"uniswap-v3","chain":"Polygon","apy":37.78,"tvl":168642},
-    {"symbol":"SOL-USDC","project":"uniswap-v3","chain":"Arbitrum","apy":30.73,"tvl":133692}
+    {"symbol":"SOL-USDC","project":"raydium-clmm","chain":"Solana","apy":35.42,"tvl":7234100},
+    {"symbol":"SOL-USDC","project":"uniswap-v3","chain":"Arbitrum","apy":30.73,"tvl":133692},
+    {"symbol":"SOL-USDT","project":"orca-dex","chain":"Solana","apy":28.15,"tvl":4891200},
+    {"symbol":"mSOL-SOL","project":"meteora","chain":"Solana","apy":18.73,"tvl":3156400},
+    {"symbol":"SOL-JitoSOL","project":"meteora","chain":"Solana","apy":14.82,"tvl":2743800},
+    {"symbol":"SOL-BONK","project":"raydium-amm","chain":"Solana","apy":62.44,"tvl":1893200}
   ],
   "HYPE": [
     {"symbol":"WHYPE-USDC","project":"project-x","chain":"Hyperliquid","apy":29.63,"tvl":11736775,"pair_type":"STABLE"},
@@ -353,13 +373,19 @@ const POOLS = {
   ],
   "STABLE": [
     {"symbol":"USDC-BRLA","project":"uniswap-v3","chain":"Polygon","apy":29.49,"tvl":172912},
+    {"symbol":"USDC-USDT","project":"curve","chain":"Ethereum","apy":24.18,"tvl":342891700},
+    {"symbol":"USDC-USDT","project":"aerodrome","chain":"Base","apy":22.45,"tvl":48273100},
     {"symbol":"USDC-XSGD","project":"uniswap-v3","chain":"Polygon","apy":12.92,"tvl":204739},
     {"symbol":"USDT-USD1","project":"uniswap-v4","chain":"BSC","apy":12.03,"tvl":105206},
-    {"symbol":"USDT-USD1","project":"uniswap-v4","chain":"BSC","apy":11.4,"tvl":100927},
+    {"symbol":"USDC-USDT","project":"meteora","chain":"Solana","apy":18.74,"tvl":29847300},
+    {"symbol":"USDC-USDT","project":"raydium-amm","chain":"Solana","apy":16.32,"tvl":14293800},
+    {"symbol":"DAI-USDC","project":"curve","chain":"Ethereum","apy":12.87,"tvl":89432100},
     {"symbol":"DAI-USDT","project":"uniswap-v4","chain":"Polygon","apy":9.32,"tvl":970914},
     {"symbol":"USDT-USD1","project":"uniswap-v3","chain":"BSC","apy":7.62,"tvl":200449},
     {"symbol":"USDC-DAI","project":"uniswap-v4","chain":"Polygon","apy":7.18,"tvl":365675},
-    {"symbol":"USDC-USDC","project":"uniswap-v3","chain":"Polygon","apy":6.67,"tvl":5433558}
+    {"symbol":"USDC-USDC","project":"uniswap-v3","chain":"Polygon","apy":6.67,"tvl":5433558},
+    {"symbol":"USDC-USDT","project":"uniswap-v3","chain":"Arbitrum","apy":8.43,"tvl":78291400},
+    {"symbol":"FRAX-USDC","project":"curve","chain":"Arbitrum","apy":9.72,"tvl":12438700}
   ]
 };
 
@@ -402,6 +428,60 @@ const SECTION_META = {
   "INDEX": { color: "#a78bfa", icon: "📊" },
   "METALS": { color: "#fbbf24", icon: "🥇" }
 };
+
+// ══════════════════════════════════════════════════════════
+// ── Protocol Links (direct URLs per project + chain)
+// ══════════════════════════════════════════════════════════
+const PROTOCOL_LINKS = {
+  "uniswap-v3": {
+    "Ethereum":  "https://app.uniswap.org/explore/pools/ethereum",
+    "Arbitrum":  "https://app.uniswap.org/explore/pools/arbitrum",
+    "Polygon":   "https://app.uniswap.org/explore/pools/polygon",
+    "Base":      "https://app.uniswap.org/explore/pools/base",
+    "BSC":       "https://app.uniswap.org/explore/pools/bnb",
+    "Optimism":  "https://app.uniswap.org/explore/pools/optimism"
+  },
+  "uniswap-v4": {
+    "Ethereum":  "https://app.uniswap.org/explore/pools/ethereum",
+    "Arbitrum":  "https://app.uniswap.org/explore/pools/arbitrum",
+    "Base":      "https://app.uniswap.org/explore/pools/base",
+    "BSC":       "https://app.uniswap.org/explore/pools/bnb",
+    "Polygon":   "https://app.uniswap.org/explore/pools/polygon"
+  },
+  "orca-dex":     { "Solana": "https://www.orca.so/pools" },
+  "raydium-amm":  { "Solana": "https://raydium.io/liquidity/" },
+  "raydium-clmm": { "Solana": "https://raydium.io/clmm/pools/" },
+  "project-x":    { "Hyperliquid": "https://app.hyperliquid.xyz/pools" },
+  "camelot-v2":   { "Arbitrum": "https://app.camelot.exchange/liquidity" },
+  "camelot-v3":   { "Arbitrum": "https://app.camelot.exchange/liquidity" },
+  "gmtrade":      { "Solana": "https://app.gmtrade.io" },
+  "omnipair":     { "Solana": "https://omnipair.xyz" },
+  "curve":        {
+    "Ethereum":  "https://curve.fi/#/ethereum/pools",
+    "Arbitrum":  "https://curve.fi/#/arbitrum/pools",
+    "Base":      "https://curve.fi/#/base/pools"
+  },
+  "aerodrome":    { "Base": "https://aerodrome.finance/liquidity" },
+  "velodrome":    { "Optimism": "https://velodrome.finance/liquidity" },
+  "pancakeswap":  {
+    "BSC":       "https://pancakeswap.finance/liquidity",
+    "Ethereum":  "https://pancakeswap.finance/liquidity",
+    "Arbitrum":  "https://pancakeswap.finance/liquidity"
+  },
+  "balancer":     {
+    "Ethereum":  "https://app.balancer.fi/#/ethereum/pools",
+    "Arbitrum":  "https://app.balancer.fi/#/arbitrum/pools"
+  },
+  "meteora":      { "Solana": "https://app.meteora.ag/pools" },
+  "lifinity":     { "Solana": "https://lifinity.io/pools" }
+};
+
+function getPoolLink(project, chain) {
+  const proto = PROTOCOL_LINKS[project];
+  if (!proto) return null;
+  return proto[chain] || proto[Object.keys(proto)[0]] || null;
+}
+
 
 const RWA_INFO = {
   "ONDO": "Ondo Finance — Tokenização de treasuries e RWA institucional. OUSG (US Treasuries), USDY (yield-bearing stablecoin).",
@@ -467,7 +547,10 @@ function renderSections() {
               <td><span class="chain-tag">${p.chain}</span></td>
               <td class="num apr-val">${p.apy.toFixed(1)}%${p.apy > 500 ? ' ⚠️' : ''}</td>
               <td class="num tvl-val">${fmt(p.tvl)}</td>
-              <td>${i === 0 ? '<span class=&quot;badge badge-best&quot;>melhor</span>' : ''}</td>
+              <td style="display:flex;align-items:center;gap:.35rem">
+                ${i === 0 ? '<span class=\"badge badge-best\">melhor</span>' : ''}
+                ${(() => { const url = getPoolLink(p.project, p.chain); return url ? `<a class="proto-link" href="${url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Abrir no protocolo">↗</a>` : ''; })()}
+              </td>
             </tr>`;
           }).join('')}
         </tbody>
@@ -558,6 +641,15 @@ function openPanel(cat, idx) {
   }
   if (pool.apy > 500) {
     html += `<div class="note" style="border-color:var(--orange);color:var(--orange)">⚠️ APR acima de 500% é atípico. Pode ser temporário (spike de volume) ou pool muito nova. Avalie com cautela e monitore diariamente.</div>`;
+  }
+  // Add protocol link button at end of panel
+  const poolLink = getPoolLink(pool.project, pool.chain);
+  if (poolLink) {
+    html += `<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+      <a class="btn-protocol" href="${poolLink}" target="_blank" rel="noopener">
+        ↗ Ir ao Protocolo (${pool.project})
+      </a>
+    </div>`;
   }
   document.getElementById('panelContent').innerHTML = html;
   panel.classList.add('open');
