@@ -4979,6 +4979,113 @@ removeWallet = function(idx) {
   updateWalletBadge();
   setTimeout(openWalletModal, 100);
 };
+
+// ── Smart Wallet Analysis ─────────────────────────────────────────────────────
+// Uses DefiLlama portfolio API to suggest features already in the app
+async function analyzeWalletPortfolio(walletIdx) {
+  var wallets = getWallets();
+  var w = wallets[walletIdx];
+  var el = document.getElementById('wscan-' + walletIdx);
+  if (!w || !el) return;
+  var addr = w.addr || w.address || '';
+  var net  = w.network || 'auto';
+  el.innerHTML = '<div style="font-size:.68rem;color:var(--muted);padding:.3rem 0">Analisando carteira...</div>';
+
+  var portfolio = null;
+  if (addr.startsWith('0x')) {
+    try {
+      var res = await fetch('https://api.llama.fi/portfolio/' + addr, { signal: AbortSignal.timeout(6000) });
+      if (res.ok) portfolio = await res.json();
+    } catch(e) {}
+  }
+
+  var protocols = new Set();
+  var chains = new Set();
+  var totalUsd = 0;
+  if (portfolio && portfolio.protocols) {
+    portfolio.protocols.forEach(function(p) {
+      if (p.chain) chains.add(p.chain.toLowerCase());
+      if (p.name) protocols.add(p.name.toLowerCase());
+      if (p.tvl) totalUsd += p.tvl;
+    });
+  }
+
+  // Detect target chain
+  var isSol = chains.has('solana') || net === 'solana';
+  var isHL  = chains.has('hyperliquid') || net === 'hyperliquid';
+  var targetChain = isSol ? 'Solana' : isHL ? 'Hyperliquid' : 'Ethereum';
+
+  var suggestions = [];
+  var checks = JSON.parse(localStorage.getItem('airdropChecks') || '{}');
+
+  // Portfolio value
+  if (totalUsd > 0) {
+    suggestions.push({ icon: 'P', color: '#34d399',
+      text: 'Portfolio: $' + (totalUsd >= 1000 ? (totalUsd/1000).toFixed(1)+'K' : totalUsd.toFixed(0)),
+      sub: Array.from(chains).join(' · ') || targetChain, action: null });
+  }
+
+  // Airdrops pending
+  var airs = (typeof AIRDROPS !== 'undefined' ? AIRDROPS : []).filter(function(a){
+    if (isSol) return a.chain.indexOf('Solana') >= 0;
+    if (isHL)  return a.chain.indexOf('Hyperliquid') >= 0;
+    return true;
+  }).filter(function(a){ return (checks[a.id]||[]).length < a.tasks.length; }).slice(0,2);
+  if (airs.length > 0) {
+    suggestions.push({ icon: 'A', color: '#a855f7',
+      text: airs.length + ' airdrop(s) pendente(s)',
+      sub: airs.map(function(a){ return a.name; }).join(', '),
+      action: "showTab('airdrops');closePanel()" });
+  }
+
+  // Best pool for chain
+  var allPools = typeof POOLS !== 'undefined' ? Object.values(POOLS).flat() : [];
+  var top = allPools.filter(function(p){ return p.chain === targetChain; }).sort(function(a,b){ return b.apy-a.apy; })[0];
+  if (top) {
+    suggestions.push({ icon: 'Y', color: 'var(--cyan)',
+      text: 'Yield em ' + targetChain + ': ' + top.symbol,
+      sub: top.apy.toFixed(1) + '% APY — ' + (top.project||''),
+      action: "showTab('pools');closePanel()" });
+  }
+
+  // Lending detected
+  var lend = ['aave','compound','morpho','kamino','drift','euler','marginfi','hyperlend'];
+  var hasLend = Array.from(protocols).some(function(p){ return lend.some(function(l){ return p.indexOf(l)>=0; }); });
+  var myLoans = JSON.parse(localStorage.getItem('defiLoans')||'[]');
+  if (hasLend && myLoans.length === 0) {
+    suggestions.push({ icon: 'L', color: '#f59e0b',
+      text: 'Emprestimo detectado — monitore o HF',
+      sub: 'Adicione na aba Emprestimos para alertas de liquidacao',
+      action: "showTab('loans');closePanel()" });
+  }
+
+  // Fallback
+  if (suggestions.length === 0) {
+    suggestions.push({ icon: 'Y', color: 'var(--cyan)', text: 'Melhores pools no app', sub: 'Aba Pools → yields ao vivo', action: "showTab('pools');closePanel()" });
+    suggestions.push({ icon: 'A', color: '#a855f7', text: 'Airdrops ativos', sub: 'Meteora, Axiom, Lighter e mais', action: "showTab('airdrops');closePanel()" });
+  }
+
+  // Render suggestions
+  var iconMap = {P:'📊',A:'🪂',Y:'💰',L:'⚠️'};
+  var html = '<div style="border-top:1px solid var(--border);margin-top:.4rem;padding-top:.4rem">';
+  html += '<div style="font-size:.61rem;color:var(--cyan);text-transform:uppercase;letter-spacing:.4px;margin-bottom:.3rem">Sugestoes para voce</div>';
+  suggestions.forEach(function(s) {
+    var ico = iconMap[s.icon] || s.icon;
+    html += '<div class="wscan-item"' + (s.action ? ' onclick="'+s.action+'"' : '') + ' style="' + (s.action?'cursor:pointer':'cursor:default') + '">'
+      + '<span style="font-size:.8rem;flex-shrink:0;width:16px;text-align:center">'+ico+'</span>'
+      + '<div style="flex:1;min-width:0">'
+      + '<div style="color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+s.text+'</div>'
+      + '<div style="font-size:.63rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+s.sub+'</div>'
+      + '</div>'
+      + (s.action ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>' : '')
+      + '</div>';
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+// Replace simple scan with smart portfolio analysis
+scanWalletOpps = analyzeWalletPortfolio;
+
 // Init
 setTimeout(updateWalletBadge, 500);
 </script>
