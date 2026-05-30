@@ -306,6 +306,32 @@ footer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);font-
 /* footer version */
 footer .version-tag{font-size:.65rem;color:var(--cyan);opacity:.6;margin-left:.5rem}
 
+/* ── Splash Screen ───────────────────────────── */
+#splash{position:fixed;inset:0;background:#080c18;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;transition:opacity .5s ease,visibility .5s ease}
+#splash.hidden{opacity:0;visibility:hidden;pointer-events:none}
+#splash svg{animation:splash-pop .6s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes splash-pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+#splash .splash-title{font-size:2rem;font-weight:900;color:#fff;letter-spacing:1px;animation:splash-fade .6s .25s both}
+#splash .splash-sub{font-size:.85rem;color:rgba(255,255,255,.4);animation:splash-fade .6s .4s both}
+#splash .splash-bar{width:120px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;animation:splash-fade .4s .5s both}
+#splash .splash-bar-fill{height:100%;background:linear-gradient(90deg,#3b9eff,#a855f7);border-radius:2px;animation:splash-load 1.2s .3s ease forwards}
+@keyframes splash-load{from{width:0}to{width:100%}}
+@keyframes splash-fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Animated Canvas Background ─────────────── */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.45}
+
+/* ── Header redesenhado ──────────────────────── */
+header{position:relative;z-index:10;background:rgba(8,12,24,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(59,158,255,.15);padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#3b9eff,#a855f7);pointer-events:none}
+.header-brand{display:flex;align-items:center;gap:.7rem}
+.header-hex{flex-shrink:0}
+.header-titles h1{font-size:.95rem;font-weight:800;color:#fff;letter-spacing:.3px;line-height:1.2}
+.header-titles p{font-size:.62rem;color:rgba(255,255,255,.3);margin-top:.1rem}
+/* Tab section transitions enhanced */
+.tab-section{animation:tabIn .22s cubic-bezier(.4,0,.2,1)}
+@keyframes tabIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
 
 /* Protocol link button */
 .proto-link{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:5px;background:rgba(59,158,255,.12);border:1px solid rgba(59,158,255,.25);color:var(--cyan);font-size:.75rem;cursor:pointer;transition:background .15s,transform .12s;text-decoration:none;flex-shrink:0}
@@ -400,20 +426,71 @@ footer .version-tag{font-size:.65rem;color:var(--cyan);opacity:.6;margin-left:.5
 </style>
 </head>
 <body>
+
+<!-- ── Splash Screen ── -->
+<div id="splash">
+  <svg width="88" height="88" viewBox="0 0 88 88">
+    <defs>
+      <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#3b9eff"/><stop offset="100%" stop-color="#a855f7"/>
+      </linearGradient>
+    </defs>
+    <polygon points="44,4 80,24 80,64 44,84 8,64 8,24" fill="rgba(59,158,255,0.08)" stroke="url(#sg)" stroke-width="2.5"/>
+    <circle cx="44" cy="44" r="10" fill="url(#sg)"/>
+    <circle cx="26" cy="32" r="6" fill="#3b9eff" opacity=".85"/>
+    <circle cx="62" cy="32" r="6" fill="#a855f7" opacity=".85"/>
+    <circle cx="26" cy="56" r="6" fill="#a855f7" opacity=".85"/>
+    <circle cx="62" cy="56" r="6" fill="#3b9eff" opacity=".85"/>
+    <circle cx="44" cy="20" r="5" fill="#34d399" opacity=".8"/>
+    <circle cx="44" cy="68" r="5" fill="#34d399" opacity=".8"/>
+    <line x1="44" y1="44" x2="26" y2="32" stroke="#3b9eff" stroke-width="1.5" opacity=".7"/>
+    <line x1="44" y1="44" x2="62" y2="32" stroke="#a855f7" stroke-width="1.5" opacity=".7"/>
+    <line x1="44" y1="44" x2="26" y2="56" stroke="#a855f7" stroke-width="1.5" opacity=".7"/>
+    <line x1="44" y1="44" x2="62" y2="56" stroke="#3b9eff" stroke-width="1.5" opacity=".7"/>
+    <line x1="44" y1="44" x2="44" y2="20" stroke="#34d399" stroke-width="1.5" opacity=".7"/>
+    <line x1="44" y1="44" x2="44" y2="68" stroke="#34d399" stroke-width="1.5" opacity=".7"/>
+  </svg>
+  <div class="splash-title">DefiMind</div>
+  <div class="splash-sub">Inteligência DeFi em tempo real</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<!-- ── Animated Background Canvas ── -->
+<canvas id="bg-canvas"></canvas>
+
 <div id="app">
 <header>
-<div>
-<h1><span>&#9679;</span> DefiMind <span style="font-size:.75rem;font-weight:400;color:var(--muted);margin-left:.3rem">sua inteligência DeFi</span></h1>
-<p class="timestamp">Atualizado: 2026-05-09 | Fonte: DefiLlama + Análise Técnica</p>
-</div>
-<div class="controls">
-<label class="toggle controls-yield" id="topToggleWrap"><input type="checkbox" id="topToggle" checked> Top 10</label>
-<button id="alert-bell" onclick="openAlertsPanel()" title="Alertas das suas pools"
-  style="position:relative;background:none;border:1px solid var(--border);border-radius:6px;padding:5px 10px;cursor:pointer;color:var(--muted);font-size:.85rem;display:flex;align-items:center;gap:.3rem;transition:border-color .2s">
-  🔔 <span id="alert-bell-label" style="font-size:.72rem">Alertas</span>
-  <span id="alert-badge" style="display:none;position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;border-radius:50%;width:17px;height:17px;font-size:.6rem;font-weight:700;display:none;align-items:center;justify-content:center;line-height:1">0</span>
-</button>
-</div>
+  <div class="header-brand">
+    <svg class="header-hex" width="38" height="38" viewBox="0 0 88 88">
+      <defs>
+        <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#3b9eff"/><stop offset="100%" stop-color="#a855f7"/>
+        </linearGradient>
+      </defs>
+      <polygon points="44,4 80,24 80,64 44,84 8,64 8,24" fill="rgba(59,158,255,0.1)" stroke="url(#hg)" stroke-width="3"/>
+      <circle cx="44" cy="44" r="9" fill="url(#hg)"/>
+      <circle cx="26" cy="32" r="5" fill="#3b9eff" opacity=".8"/>
+      <circle cx="62" cy="32" r="5" fill="#a855f7" opacity=".8"/>
+      <circle cx="26" cy="56" r="5" fill="#a855f7" opacity=".8"/>
+      <circle cx="62" cy="56" r="5" fill="#3b9eff" opacity=".8"/>
+      <line x1="44" y1="44" x2="26" y2="32" stroke="#3b9eff" stroke-width="1.5" opacity=".6"/>
+      <line x1="44" y1="44" x2="62" y2="32" stroke="#a855f7" stroke-width="1.5" opacity=".6"/>
+      <line x1="44" y1="44" x2="26" y2="56" stroke="#a855f7" stroke-width="1.5" opacity=".6"/>
+      <line x1="44" y1="44" x2="62" y2="56" stroke="#3b9eff" stroke-width="1.5" opacity=".6"/>
+    </svg>
+    <div class="header-titles">
+      <h1>DefiMind <span style="font-size:.65rem;font-weight:400;color:rgba(255,255,255,.3);margin-left:.3rem">sua inteligência DeFi</span></h1>
+      <p>Solana · Ethereum · Base · Arbitrum · Hyperliquid</p>
+    </div>
+  </div>
+  <div class="controls">
+    <label class="toggle controls-yield" id="topToggleWrap"><input type="checkbox" id="topToggle" checked> Top 10</label>
+    <button id="alert-bell" onclick="openAlertsPanel()" title="Alertas das suas pools"
+      style="position:relative;background:none;border:1px solid var(--border);border-radius:6px;padding:5px 10px;cursor:pointer;color:var(--muted);font-size:.85rem;display:flex;align-items:center;gap:.3rem;transition:border-color .2s">
+      🔔 <span id="alert-bell-label" style="font-size:.72rem">Alertas</span>
+      <span id="alert-badge" style="display:none;position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;border-radius:50%;width:17px;height:17px;font-size:.6rem;font-weight:700;align-items:center;justify-content:center;line-height:1">0</span>
+    </button>
+  </div>
 </header>
 
 <!-- Tab Navigation -->
@@ -4435,6 +4512,73 @@ function checkLoanAlerts() {
   });
 }
 
+
+// ══════════════════════════════════════════════════════════════════════════════════
+// SPLASH + BACKGROUND ANIMATION
+// ══════════════════════════════════════════════════════════════════════════════════
+
+// Splash — oculta após 1.6s
+(function() {
+  const splash = document.getElementById('splash');
+  if (!splash) return;
+  setTimeout(() => splash.classList.add('hidden'), 1600);
+})();
+
+// Rede animada no fundo (canvas)
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const COLORS = ['#3b9eff','#a855f7','#34d399'];
+  const N = 26;
+  let nodes = [], W, H;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function init() {
+    nodes = Array.from({length: N}, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random()-.5)*.3, vy: (Math.random()-.5)*.3,
+      r: Math.random()*2+1.5,
+      color: COLORS[Math.floor(Math.random()*COLORS.length)],
+      op: Math.random()*.35+.15
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    for (let i=0;i<nodes.length;i++) {
+      for (let j=i+1;j<nodes.length;j++) {
+        const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if (d<150) {
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x,nodes[i].y);
+          ctx.lineTo(nodes[j].x,nodes[j].y);
+          ctx.strokeStyle=`rgba(59,158,255,${.1*(1-d/150)})`;
+          ctx.lineWidth=.7;
+          ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(n => {
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle=n.color+Math.floor(n.op*255).toString(16).padStart(2,'0');
+      ctx.fill();
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<0||n.x>W) n.vx*=-1;
+      if(n.y<0||n.y>H) n.vy*=-1;
+    });
+    requestAnimationFrame(draw);
+  }
+
+  resize(); init(); draw();
+  window.addEventListener('resize',()=>{resize();init();});
+})();
 
 // ══════════════════════════════════════════════════════════════════════════════════
 // CHANGELOG — "O que há de novo"
